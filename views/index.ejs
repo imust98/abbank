@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset=utf-8>
+    <meta name=viewport content="width=device-width,initial-scale=1">
+    <title>网易云助手</title>
+    <script>
+      window.config = {
+        appId:'<%= htmlWebpackPlugin.options.appId %>',
+        appList:JSON.parse('<%= htmlWebpackPlugin.options.appList %>')
+      }
+    </script>
+  </head>
+  <body>
+    <div id=app></div>
+  </body>
+  </html>
