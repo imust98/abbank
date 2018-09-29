@@ -62,7 +62,7 @@ export default {
       if (/^2/.test(res.code)) {
         if (res.result) {
           this.loginFail = false;
-          // location.href = res.result;
+          location.href = '/customer';
         } else {
           this.loginFail = true;
         }

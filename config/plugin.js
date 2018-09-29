@@ -6,14 +6,8 @@ exports.ejs = {
 }
 exports.static = true;
 
-exports.passport = {
+// config/plugin.js
+exports.mysql = {
   enable: true,
-  package: 'egg-passport',
-};
-
-exports.passportLocal = {
-  enable: true,
-  package: 'egg-passport-local',
-  usernameField: 'username',
-  passwordField: 'password',
+  package: 'egg-mysql',
 };
