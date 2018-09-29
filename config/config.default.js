@@ -1,7 +1,23 @@
 'use strict';
 const path = require('path');
 module.exports = appInfo => {
-  const config = {};
+  const config = {
+    mysql: {
+      client: {
+        host: 'localhost',
+        // port
+        port: '3306',
+        // username
+        user: 'root',
+        // password
+        password: '1q2w3e4r',
+        // database
+        database: 'abbank'
+      },
+      app: true,
+      agent: false
+    }
+  };
   config.keys = appInfo.name + '_1489393729180_4559';
   // add your config here
   config.middleware = ['errorHandler'];
