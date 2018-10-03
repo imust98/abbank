@@ -1,0 +1,9 @@
+.m-layout {
+  &>.list{
+    padding-top: 20px;
+  }
+  &>.page {
+    padding-top: 20px;
+    text-align: right;
+  }
+}

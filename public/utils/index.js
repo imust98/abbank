@@ -172,10 +172,7 @@ export function deepClone(source) {
   return targetObj;
 }
 export function formatRestfulUrl(url = '', data = {}) {
-  const appId = window.config.appId;
-  return pathToRegexp.compile(url)(Object.assign(data, {
-    appId
-  }));
+  return pathToRegexp.compile(url)(Object.assign(data, {}));
 }
 
 export function assign(target, source) {

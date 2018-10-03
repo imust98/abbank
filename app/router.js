@@ -16,4 +16,8 @@ module.exports = app => {
   router.get(/\/customer\/*/, app.middlewares.auth(), controller.home.detail);
   router.post('/api/user/login', controller.user.login);
   router.post('/api/user/logout', controller.user.logout); 
+  router.post('/api/person/add', controller.person.create); 
+  router.get('/api/person/list', controller.person.list); 
+  router.delete('/api/person/delete/:id', controller.person.delete); 
+  router.put('/api/person/:id', controller.person.update); 
 };
