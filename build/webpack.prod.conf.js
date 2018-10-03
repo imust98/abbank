@@ -70,8 +70,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       template: path.resolve(__dirname, '../views/index.ejs'),
       chunks: ['manifest', 'vendor', 'main'],
       inject: true,
-      appList:'<%- JSON.stringify(appList) %>',
-      appId:'<%- appId %>',
+      user:'<%- JSON.stringify(user) %>',
       minify: {
         removeComments: true,
         collapseWhitespace: true,

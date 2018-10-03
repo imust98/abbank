@@ -3,7 +3,7 @@
  } from '@/api/user';
  const user = {
    state: {
-
+    info:window.config.user
    },
    mutations: {
 

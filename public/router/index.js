@@ -49,40 +49,10 @@ export const constantRouterMap = [
       }
     ]
   }
-  // {
-  //   path: '/customer1',
-  //   component: Layout,
-  //   alwaysShow: true,
-  //   redirect: '/customer/person',
-  //   name: 'customer1',
-  //   meta: {
-  //     title: '查询统计',
-  //     icon: 'message'
-  //   },
-  //   children: [
-  //     {
-  //       path: 'person1',
-  //       component: PersonView,
-  //       name:"person1",
-  //       meta: {
-  //         title: '贷款统计',
-  //         roles: ['admin'] // or you can only set roles in sub nav
-  //       }
-  //     },
-  //     {
-  //       path: 'company1',
-  //       component: CompanyView,
-  //       name:"company1",
-  //       meta: {
-  //         title: '信用统计',
-  //         roles: ['admin'] // or you can only set roles in sub nav
-  //       }
-  //     }
-  //   ]
-  // }
 ];
 export default new Router({
   mode: 'history',
   routes: constantRouterMap
 });
 
+export const asyncRouterMap = [];

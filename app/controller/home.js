@@ -14,11 +14,12 @@ class HomeController extends Controller {
     ctx.body = await this.ctx.renderView('login.ejs');
   }
   async detail() {
-    //获取用户的appList
     const {
       ctx
     } = this;
-    ctx.body = await ctx.renderView('index.ejs');
+    ctx.body = await ctx.renderView('index.ejs',{
+      user:ctx.session.user
+    });
   }
   async nofound() {
     const {

@@ -4,18 +4,13 @@
       <hamburger class="hamburger-container" :toggleClick="toggleSideBar" :isActive="sidebar.opened"></hamburger>
       <breadcrumb class="breadcrumb-container"></breadcrumb>
       <div class="right-menu">
-        <el-dropdown class="avatar-container right-menu-item" trigger="click">
-          <div class="avatar-wrapper">
-            <span class="user-name">你好，{{user.username}}</span>
-            <i class="el-icon-caret-bottom"></i>
-          </div>
+        <el-dropdown :hide-on-click="true" @command="handleCommand">
+          <span class="el-dropdown-link">
+            你好，{{user.username}}<i class="el-icon-arrow-down el-icon--right"></i>
+          </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item divided>
-              <span @click="modifyPwd" style="display:block;">修改密码</span>
-            </el-dropdown-item>
-            <el-dropdown-item divided>
-              <span @click="logout" style="display:block;">退出</span>
-            </el-dropdown-item>
+            <el-dropdown-item command="modifyPwd">修改密码</el-dropdown-item>
+            <el-dropdown-item command="logout">退出</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -34,18 +29,25 @@ export default {
     Hamburger
   },
   computed: {
-    ...mapGetters(['sidebar'])
+    ...mapGetters(['sidebar', 'user']),
+    user: {
+      get() {
+        return this.$store.state.user.info
+      }
+    }
   },
   data() {
     return {
-      user:{}
     };
   },
   methods: {
+    handleCommand(command) {
+      this[command].call(this);
+    },
     toggleSideBar() {
       this.$store.dispatch('toggleSideBar');
     },
-    modifyPwd(){
+    modifyPwd() {
 
     },
     logout() {
@@ -77,61 +79,14 @@ export default {
   }
   .right-menu {
     float: right;
+    padding-right: 40px;
     height: 100%;
     &:focus {
       outline: none;
     }
-    .right-menu-item {
-      display: inline-block;
-      margin: 0 8px;
-    }
-    .screenfull {
-      height: 20px;
-    }
-    .international {
-      vertical-align: top;
-    }
-    .theme-switch {
-      vertical-align: 15px;
-    }
-    .avatar-container {
-      height: 50px;
-      margin-right: 30px;
-      .avatar-wrapper {
-        cursor: pointer;
-        margin-top: 5px;
-        position: relative;
-        .user-name {
-          display: inline-block;
-          vertical-align: 10px;
-          padding-right: 20px;
-        }
-        .user-avatar {
-          width: 40px;
-          height: 40px;
-          border-radius: 10px;
-        }
-        .el-icon-caret-bottom {
-          position: absolute;
-          right: -20px;
-          top: 25px;
-          font-size: 12px;
-        }
-      }
-    }
-  }
-}
-</style>
-<style lang="scss">
-.table-applist {
-  .cell {
-    display: flex;
-    align-items: center;
-    img {
-      height: 50px;
-      width: 50px;
-      margin-right: 20px;
-      border-radius: 50%;
+    .el-dropdown {
+      height: 30px;
+      cursor: pointer;
     }
   }
 }
