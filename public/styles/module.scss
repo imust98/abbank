@@ -1,7 +1,29 @@
 .m-layout {
-  &>.list{
+  position: relative;
+
+  &>.query {
+    position: absolute;
+    display: flex;
+    width: 450px;
+    top:0px;
+    right: 0px;
+    .el-input{
+      margin-right: 10px;
+      .el-input__inner{
+        border-radius: 0px 4px 4px 0px;
+      }
+    }
+    .el-select{
+      .el-input__inner{
+        border-radius: 4px 0px 0px 4px;
+      }
+    }
+  }
+
+  &>.list {
     padding-top: 20px;
   }
+
   &>.page {
     padding-top: 20px;
     text-align: right;

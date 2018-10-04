@@ -31,9 +31,22 @@
      }
      return result;
    }
-   async getList() {
-     const result = await this.app.mysql.select('customer_person');
-     return result || []
+   async getList(params) {
+     const result = {
+       list:[],
+       query:{}
+     }
+     if(!params.keyword) {
+      result.list = await this.app.mysql.select('customer_person');
+     } else {
+      result.list = await this.app.mysql.select('customer_person', { 
+        where: { [params.keyword]: params.value }, 
+        limit: parseInt(params.pageSize),
+        offset: parseInt(params.pageIndex) - 1, 
+      });
+     }
+     
+     return result
    }
  }
  module.exports = PersonService;

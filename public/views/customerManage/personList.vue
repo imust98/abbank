@@ -3,6 +3,18 @@
     <div class="create">
       <el-button type="primary" @click="handleCreate">添加个人客户</el-button>
     </div>
+    <div class="query">
+      <el-select v-model="query.keyword" clearable placeholder="请选择">
+        <el-option
+          v-for="item in options"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value">
+        </el-option>
+      </el-select>
+      <el-input v-model="query.value" placeholder="请输入内容"></el-input>
+      <el-button type="default" @click="handleQuery">查询</el-button>
+    </div>
     <div class="list">
       <el-table
       :data="personList"
@@ -80,12 +92,23 @@ export default {
       query: {
         pageIndex: 1,
         pageSize: 20,
-        name: ''
+        keyword: '',
+        value:''
       },
       responseQuery: {
         totleCount: 0,
         totlePageCount: 0
-      }
+      },
+      options: [{
+          value: 'name',
+          label: '姓名'
+        }, {
+          value: 'sex',
+          label: '性别'
+        }, {
+          value: 'card_id',
+          label: '身份证号'
+        }]
     }
   },
   methods: {

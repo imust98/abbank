@@ -31,7 +31,7 @@ const person = {
       return new Promise((resolve, reject) => {
         getList(data).then(response => {
           const data = response.data;
-          commit('PersonListLoad', data.result);
+          commit('PersonListLoad', data.result.list);
           resolve(data.result);
         });
       });

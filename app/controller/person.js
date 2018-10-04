@@ -1,6 +1,7 @@
 'use strict';
 
 const BaseController = require('./base');
+const querystring = require("querystring");
 // const qs = require('querystring');
 class PersonController extends BaseController {
   async create() {
@@ -43,7 +44,8 @@ class PersonController extends BaseController {
     const {
       ctx
     } = this;
-    const list = await ctx.service.person.getList(ctx.request.body);
+    const params = querystring.parse(ctx.querystring);
+    const list = await ctx.service.person.getList(params);
     this.setModel({
       result: list
     });
