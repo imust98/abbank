@@ -1,7 +1,7 @@
 <template>
   <div class="m-layout">
     <div class="create">
-      <el-button type="primary" @click="handleCreate">添加个人客户</el-button>
+      <el-button type="primary" @click="handleCreate">添加基础信息</el-button>
     </div>
     <div class="query">
       <el-select v-model="query.keyword" clearable placeholder="请选择">
@@ -46,10 +46,10 @@
       <el-table-column label="操作">
         <template slot-scope="scope">
           <div>
-            <el-button
+            <el-button v-if="!scope.row.credit_id"
             size="mini"
             type="primary"
-            @click="handleDetail(scope.$index, scope.row)">详情</el-button>
+            @click="handleAddCredit(scope.$index, scope.row)">添加信用信息</el-button>
             <el-button
             size="mini"
             type="primary"
@@ -113,7 +113,7 @@ export default {
   },
   methods: {
     formatSex(row){
-      return ['女','男'][row.sex];
+      return ['男','女'][row.sex];
     },
     handleCurrentChange(val) {
       this.query.pageIndex = val;
@@ -123,8 +123,14 @@ export default {
       this.query.pageSize = val;
       this.handleQuery();
     },
+    handleAddCredit(index,row){
+      this.$router.push('/customer/person/addCredit/'+row.id);
+    },
     handleCreate() {
       this.$router.push('/customer/person/create');
+    },
+    handleModify(index,row){
+      this.$router.push('/customer/person/modify/'+row.id);
     },
     handleDelete(index,row){
       this.$store.dispatch('DelPerson', {

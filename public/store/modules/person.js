@@ -1,12 +1,15 @@
 import {
   addPerson,
+  addPersonCredit,
   getList,
+  getPerson,
   deletePerson,
   modifyPerson
 } from '@/api/person';
 const person = {
   state: {
-    list: []
+    list: [],
+    person:null
   },
   mutations: {
     PersonListLoad: (state, list) => {
@@ -14,6 +17,9 @@ const person = {
     },
     PersonAddLoad: (state, person) => {
       state.list.push(person);
+    },
+    PersonItemLoad: (state, person) => {
+      state.person = person;
     },
     PersonDelete: (state, person) => {
       const index = state.list.findIndex(item => item.id === person.id);
@@ -36,6 +42,17 @@ const person = {
         });
       });
     },
+    GetPersonItem({
+      commit
+    }, data) {
+      return new Promise((resolve, reject) => {
+        getPerson(data).then(response => {
+          const data = response.data;
+          commit('PersonItemLoad', data.result);
+          resolve(data.result);
+        });
+      });
+    },
     AddPerson({
       commit
     }, data) {
@@ -43,6 +60,17 @@ const person = {
         addPerson(data).then(response => {
           const data = response.data;
           commit('PersonAddLoad', data.result);
+          resolve(data.result);
+        });
+      });
+    },
+    AddPersonCredit({
+      commit
+    }, data) {
+      return new Promise((resolve, reject) => {
+        addPersonCredit(data).then(response => {
+          const data = response.data;
+          commit('PersonUpdate', data.result);
           resolve(data.result);
         });
       });

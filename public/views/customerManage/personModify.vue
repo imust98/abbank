@@ -32,8 +32,66 @@
       <el-form-item label="收入情况" prop="income">
         <el-input v-model="ruleForm.income"></el-input>
       </el-form-item>
-      <el-form-item label="家庭成员编号" prop="spouse_id">
+       <el-form-item label="家庭成员编号" prop="spouse_id">
         <el-input v-model="ruleForm.spouse_id"></el-input>
+      </el-form-item>
+      <div v-if="ruleForm.credit_id">
+        <div class="title">信用信息</div>
+        <el-form-item label="信用证编号" prop="credit_id">
+          <el-input v-model="ruleForm.credit_id" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="信用证发放日" prop="credit_starttime">
+          <el-date-picker
+            v-model="ruleForm.credit_starttime"
+            type="date"
+            value-format="timestamp"
+            placeholder="选择日期">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="信用证到期日" prop="credit_expiretime">
+          <el-date-picker
+            v-model="ruleForm.credit_expiretime"
+            type="date"
+            value-format="timestamp"
+            placeholder="选择日期">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="信用证评定人" prop="credit_adjuster">
+          <el-input v-model="ruleForm.credit_adjuster"></el-input>
+        </el-form-item>
+        <el-form-item label="信用证授信级别" prop="credit_level">
+          <el-input v-model="ruleForm.credit_level"></el-input>
+        </el-form-item>
+      </div>
+      <div class="title">贷款信息</div>
+      <el-form-item label="贷款金额" prop="loans_count">
+        <el-input v-model="ruleForm.loans_count"></el-input>
+      </el-form-item>
+      <el-form-item label="贷款期限" prop="loans_deadline">
+        <el-input v-model="ruleForm.loans_deadline"></el-input>
+      </el-form-item>
+      <el-form-item label="贷款利率" prop="loans_rate">
+        <el-input v-model="ruleForm.loans_rate"></el-input>
+      </el-form-item>
+      <el-form-item label="放款日期" prop="lending_date">
+        <el-date-picker
+          v-model="ruleForm.lending_date"
+          type="date"
+          value-format="timestamp"
+          placeholder="选择日期">
+        </el-date-picker>
+      </el-form-item>
+      <el-form-item label="贷款余额" prop="loans_balance">
+        <el-input v-model="ruleForm.loans_balance"></el-input>
+      </el-form-item>
+      <el-form-item label="贷款科目" prop="loans_subject">
+        <el-input v-model="ruleForm.loans_subject"></el-input>
+      </el-form-item>
+      <el-form-item label="还款方式" prop="repayment_method">
+        <el-input v-model="ruleForm.repayment_method"></el-input>
+      </el-form-item>
+      <el-form-item label="担保人编码" prop="loans_bondsman_ids">
+        <el-input v-model="ruleForm.loans_bondsman_ids"></el-input>
       </el-form-item>
       <div class="form-button">
         <el-form-item>
@@ -45,11 +103,13 @@
   </div>
 </template>
 <script>
+import _ from 'lodash';
 export default {
   data() {
     return {
       male: 0,
       female: 1,
+      id:'',
       ruleForm: {
         name: '',
         age: '',
@@ -60,7 +120,20 @@ export default {
         home_address: '',
         unit_address: '',
         income: '',
-        spouse_id:''
+        spouse_id: '',
+        credit_id: '',
+        credit_starttime: '',
+        credit_expiretime: '',
+        credit_adjuster: '',
+        credit_level: '',
+        loans_count: '',
+        loans_deadline: '',
+        loans_rate: '',
+        loans_bondsman_ids: '',
+        lending_date: '',
+        loans_balance: '',
+        loans_subject: '',
+        repayment_method: ''
       },
       rules: {
         name: [
@@ -78,7 +151,7 @@ export default {
       const data = this.ruleForm;
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.$store.dispatch('AddPerson', data).then((result) => {
+          this.$store.dispatch('ModifyPerson', {data,params:{id:this.id}}).then((result) => {
             this.$router.push('/customer/person/list');
           }).catch(function () {
             return new Error('reject again in nested Promise');
@@ -92,6 +165,18 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields();
     }
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      vm.id = to.params.id;
+      vm.$store.dispatch('GetPersonItem', {
+        params: {
+          id: to.params.id
+        }
+      }).then(data => {
+        vm.ruleForm = _.merge({}, data);
+      });
+    });
   }
 }
 </script>
@@ -107,7 +192,7 @@ export default {
     border-left: 3px solid #efefef;
     line-height: 20px;
   }
-  .form-button{
+  .form-button {
     padding-top: 20px;
     text-align: center;
   }
@@ -118,7 +203,7 @@ export default {
   width: 300px;
 }
 .el-form-item__label {
-  font-weight:normal;
+  font-weight: normal;
 }
 </style>
 

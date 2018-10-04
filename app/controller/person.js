@@ -8,8 +8,23 @@ class PersonController extends BaseController {
     const {
       ctx
     } = this;
-    const person = await ctx.service.person.create(ctx.request.body);
-    
+    const result = await ctx.service.person.create(ctx.request.body);
+    const person = await ctx.service.person.getItem(parseInt(result.id));
+    this.setModel({
+      result: person
+    });
+  }
+  async addCredit() {
+    const {
+      ctx
+    } = this;
+    const {
+      id
+    } = ctx.params;
+    const pid = parseInt(id);
+    const result = await ctx.service.person.addCredit(pid, ctx.request.body);
+    const person = await ctx.service.person.getItem(parseInt(result.id));
+
     this.setModel({
       result: person
     });
@@ -22,7 +37,7 @@ class PersonController extends BaseController {
       id
     } = ctx.params;
     const person = await ctx.service.person.delete(id);
-    
+
     this.setModel({
       result: person
     });
@@ -34,8 +49,8 @@ class PersonController extends BaseController {
     const {
       id
     } = ctx.params;
-    const person = await ctx.service.person.update(ctx.request.body);
-    
+    const result = await ctx.service.person.update(parseInt(id), ctx.request.body);
+    const person = await ctx.service.person.getItem(parseInt(id));
     this.setModel({
       result: person
     });
@@ -48,6 +63,18 @@ class PersonController extends BaseController {
     const list = await ctx.service.person.getList(params);
     this.setModel({
       result: list
+    });
+  }
+  async item() {
+    const {
+      ctx
+    } = this;
+    const {
+      id
+    } = ctx.params;
+    const item = await ctx.service.person.getItem(parseInt(id));
+    this.setModel({
+      result: item
     });
   }
 }

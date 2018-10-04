@@ -3,6 +3,8 @@ import Router from 'vue-router';
 import Layout from '../views/layout/index.vue';
 import PersonView from '@/views/customerManage/personList.vue';
 import PersonCreate from '@/views/customerManage/person.vue';
+import PersonCredit from '@/views/customerManage/credit.vue';
+import PersonModify from '@/views/customerManage/personModify.vue';
 import CompanyView from '@/views/customerManage/company.vue';
 Vue.use(Router);
 
@@ -22,7 +24,7 @@ export const constantRouterMap = [
       {
         path: 'person/list',
         component: PersonView,
-        name:"person",
+        name:"personList",
         meta: {
           title: '个人客户',
           roles: ['admin'] // or you can only set roles in sub nav
@@ -32,9 +34,29 @@ export const constantRouterMap = [
         path: 'person/create',
         component: PersonCreate,
         hidden: true,
-        name:"person",
+        name:"personCreate",
         meta: {
           title: '添加个人客户',
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'person/addCredit/:id',
+        component: PersonCredit,
+        hidden: true,
+        name:"personCredit",
+        meta: {
+          title: '添加信用信息',
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'person/modify/:id',
+        component: PersonModify,
+        hidden: true,
+        name:"personModify",
+        meta: {
+          title: '修改客户信息',
           roles: ['admin'] // or you can only set roles in sub nav
         }
       },

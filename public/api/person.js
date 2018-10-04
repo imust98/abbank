@@ -20,6 +20,12 @@ export function getList(data = {}) {
   });
 }
 
+export function getPerson(data = {}) {
+  return request({
+    url: formatRestfulUrl('/api/person/:id',data.params),
+    method: 'get'
+  });
+}
 export function addPerson(data = {}) {
   return request({
     url: '/api/person/add',
@@ -27,7 +33,13 @@ export function addPerson(data = {}) {
     data
   });
 }
-
+export function addPersonCredit(data){
+  return request({
+    url: formatRestfulUrl('/api/person/credit/:id',data.params),
+    method: 'post',
+    data:data.data
+  });
+}
 export function deletePerson(data = {}) {
   return request({
     url: formatRestfulUrl('/api/person/delete/:id', data.params),

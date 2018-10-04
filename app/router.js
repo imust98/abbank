@@ -17,7 +17,9 @@ module.exports = app => {
   router.post('/api/user/login', controller.user.login);
   router.post('/api/user/logout', controller.user.logout); 
   router.post('/api/person/add', controller.person.create); 
+  router.post('/api/person/credit/:id', controller.person.addCredit); 
   router.get('/api/person/list', controller.person.list); 
   router.delete('/api/person/delete/:id', controller.person.delete); 
   router.put('/api/person/:id', controller.person.update); 
+  router.get('/api/person/:id', controller.person.item); 
 };
