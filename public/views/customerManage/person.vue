@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="m-form-person">
     <el-form :model="ruleForm" :inline="true" :rules="rules" ref="ruleForm" label-width="120px" class="demo-ruleForm">
       <div class="title">基础信息</div>
       <el-form-item label="姓名" prop="name">
@@ -60,7 +60,7 @@ export default {
         home_address: '',
         unit_address: '',
         income: '',
-        spouse_id:''
+        spouse_id: ''
       },
       rules: {
         name: [
@@ -107,18 +107,20 @@ export default {
     border-left: 3px solid #efefef;
     line-height: 20px;
   }
-  .form-button{
+  .form-button {
     padding-top: 20px;
     text-align: center;
   }
 }
 </style>
 <style lang="scss">
-.el-form-item__content {
-  width: 300px;
-}
-.el-form-item__label {
-  font-weight:normal;
+.m-form-person {
+  .el-form-item__content {
+    width: 300px;
+  }
+  .el-form-item__label {
+    font-weight: normal;
+  }
 }
 </style>
 

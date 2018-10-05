@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="m-form-modify">
     <el-form :model="ruleForm" :inline="true" :rules="rules" ref="ruleForm" label-width="120px" class="demo-ruleForm">
       <div class="title">基础信息</div>
       <el-form-item label="姓名" prop="name">
@@ -109,7 +109,7 @@ export default {
     return {
       male: 0,
       female: 1,
-      id:'',
+      id: '',
       ruleForm: {
         name: '',
         age: '',
@@ -151,7 +151,7 @@ export default {
       const data = this.ruleForm;
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.$store.dispatch('ModifyPerson', {data,params:{id:this.id}}).then((result) => {
+          this.$store.dispatch('ModifyPerson', { data, params: { id: this.id } }).then((result) => {
             this.$router.push('/customer/person/list');
           }).catch(function () {
             return new Error('reject again in nested Promise');
@@ -199,11 +199,13 @@ export default {
 }
 </style>
 <style lang="scss">
-.el-form-item__content {
-  width: 300px;
-}
-.el-form-item__label {
-  font-weight: normal;
+.m-form-modify {
+  .el-form-item__content {
+    width: 300px;
+  }
+  .el-form-item__label {
+    font-weight: normal;
+  }
 }
 </style>
 

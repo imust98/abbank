@@ -1,23 +1,41 @@
 <template>
   <div class="m-layout">
-    <div class="create">
-      <el-button type="primary" @click="handleCreate">添加基础信息</el-button>
-    </div>
     <div class="query">
-      <el-select v-model="query.keyword" clearable placeholder="请选择">
-        <el-option
-          v-for="item in options"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
-        </el-option>
-      </el-select>
-      <el-input v-model="query.value" placeholder="请输入内容"></el-input>
-      <el-button type="default" @click="handleQuery">查询</el-button>
+      <el-form :model="query" class="demo-form-inline">
+        <el-form-item label="分类筛选">
+          <el-select v-model="query.type" clearable placeholder="请选择">
+          <el-option
+            v-for="item in optionsType"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+        </el-form-item>
+        <el-form-item label="条件筛选">
+          <el-select v-model="query.keyword" clearable placeholder="请选择">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+          <el-input  v-model="query.value" placeholder="请输入内容"></el-input>
+        </el-form-item>
+        <div class="btn">
+          <el-button type="primary" icon="el-icon-search" @click="handleQuery">查询</el-button>
+        </div>
+      </el-form>
+    </div>
+    <div class="operation">
+      <el-button type="primary" icon="el-icon-plus" @click="handleCreate">添加人员</el-button>
+      <el-button type="primary" icon="el-icon-download" @click="handleCreate">导出Excel</el-button>
     </div>
     <div class="list">
       <el-table
       :data="personList"
+      :border="true"
       style="width: 100%">
       <el-table-column
         prop="name"
@@ -69,10 +87,10 @@
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page.sync="query.pageIndex"
-          :page-sizes="[20, 50, 100, 200]"
-          :page-size="20"
+          :page-sizes="[10, 20, 50, 100]"
+          :page-size="10"
           layout="total,sizes, prev, pager, next"
-          :total="responseQuery.totleCount">
+          :total="responseQuery.totalCount">
         </el-pagination>
       </div>
     </div>
@@ -91,29 +109,34 @@ export default {
     return {
       query: {
         pageIndex: 1,
-        pageSize: 20,
+        pageSize: 10,
+        type:'',
         keyword: '',
-        value:''
+        value: ''
       },
       responseQuery: {
-        totleCount: 0,
-        totlePageCount: 0
+        totalCount: 0,
+        totalPageCount: 0
       },
       options: [{
-          value: 'name',
-          label: '姓名'
-        }, {
-          value: 'sex',
-          label: '性别'
-        }, {
-          value: 'card_id',
-          label: '身份证号'
-        }]
+        value: 'name',
+        label: '姓名'
+      }, {
+        value: 'card_id',
+        label: '身份证号'
+      }],
+      optionsType: [{
+        value: 'credit',
+        label: '信用'
+      },{
+        value: 'loans',
+        label: '贷款'
+      }]
     }
   },
   methods: {
-    formatSex(row){
-      return ['男','女'][row.sex];
+    formatSex(row) {
+      return ['男', '女'][row.sex];
     },
     handleCurrentChange(val) {
       this.query.pageIndex = val;
@@ -123,16 +146,16 @@ export default {
       this.query.pageSize = val;
       this.handleQuery();
     },
-    handleAddCredit(index,row){
-      this.$router.push('/customer/person/addCredit/'+row.id);
+    handleAddCredit(index, row) {
+      this.$router.push('/customer/person/addCredit/' + row.id);
     },
     handleCreate() {
       this.$router.push('/customer/person/create');
     },
-    handleModify(index,row){
-      this.$router.push('/customer/person/modify/'+row.id);
+    handleModify(index, row) {
+      this.$router.push('/customer/person/modify/' + row.id);
     },
-    handleDelete(index,row){
+    handleDelete(index, row) {
       this.$store.dispatch('DelPerson', {
         params: {
           id: row.id
@@ -144,8 +167,8 @@ export default {
         .then(this.listLoadCb);
     },
     listLoadCb(data) {
-      // this.responseQuery.totleCount = data.query.totleCount;
-      // this.responseQuery.totlePageCount = data.query.totlePageCount
+      this.responseQuery.totalCount = data.query.totalCount;
+      this.responseQuery.totalPageCount = data.query.totalPageCount
     }
   },
   beforeRouteEnter(to, from, next) {

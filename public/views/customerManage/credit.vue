@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="m-form-credit">
     <el-form :model="ruleForm" :inline="true" :rules="rules" ref="ruleForm" label-width="120px" class="demo-ruleForm">
       <div class="title">信用信息</div>
       <el-form-item label="信用证发放日" prop="credit_starttime">
@@ -60,7 +60,7 @@ export default {
       const data = this.ruleForm;
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.$store.dispatch('AddPersonCredit', { data, params: { id:this.id } }).then((result) => {
+          this.$store.dispatch('AddPersonCredit', { data, params: { id: this.id } }).then((result) => {
             this.$router.push('/customer/person/list');
           }).catch(function () {
             return new Error('reject again in nested Promise');
@@ -101,11 +101,13 @@ export default {
 }
 </style>
 <style lang="scss">
-.el-form-item__content {
-  width: 300px;
-}
-.el-form-item__label {
-  font-weight: normal;
+.m-form-credit {
+  .el-form-item__content {
+    width: 300px;
+  }
+  .el-form-item__label {
+    font-weight: normal;
+  }
 }
 </style>
 

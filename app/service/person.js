@@ -34,14 +34,14 @@
      return result;
    }
    async update(id, data) {
-     if(data.credit_id) {
+     if (data.credit_id) {
        //保存信用信息
        const _data = {
-        credit_starttime: data.credit_starttime,
-        credit_expiretime: data.credit_expiretime,
-        credit_adjuster: data.credit_adjuster,
-        credit_level: data.credit_level,
-        id:data.credit_id
+         credit_starttime: data.credit_starttime,
+         credit_expiretime: data.credit_expiretime,
+         credit_adjuster: data.credit_adjuster,
+         credit_level: data.credit_level,
+         id: data.credit_id
        }
        delete data.credit_starttime;
        delete data.credit_expiretime;
@@ -59,18 +59,39 @@
        list: [],
        query: {}
      }
-     if (!params.keyword) {
-       result.list = await this.app.mysql.select('customer_person');
+     let sql = '';
+     if (params.type) {
+       if (params.keyword) {
+         if (params.type === 'credit') {
+           sql = `select * from customer_person  where credit_id and ${params.keyword} = '${params.value}'`;
+         } else {
+           sql = `select * from customer_person  where loans_count and ${params.keyword} = '${params.value}'`;
+         }
+       } else {
+         if (params.type === 'credit') {
+           sql = `select * from customer_person  where credit_id`;
+         } else {
+           sql = `select * from customer_person  where loans_count`;
+         }
+       }
      } else {
-       result.list = await this.app.mysql.select('customer_person', {
-         where: {
-           [params.keyword]: params.value
-         },
-         limit: parseInt(params.pageSize),
-         offset: parseInt(params.pageIndex) - 1,
-       });
+       if (params.keyword) {
+         if (params.type === 'credit') {
+           sql = `select * from customer_person  where  ${params.keyword} = '${params.value}'`;
+         } else {
+           sql = `select * from customer_person  where  ${params.keyword} = '${params.value}'`;
+         }
+       } else {
+         sql = `select * from customer_person`;
+       }
      }
-
+     const totalList = await this.app.mysql.query(sql);
+     result.query.totalCount = totalList.length;
+     result.query.totalPageCount = Math.ceil(totalList.length / params.pageSize);
+     const startIndex = params.pageIndex - 1;
+     const offset = startIndex * params.pageSize;
+     sql = sql + ` limit ${offset},${params.pageSize}`;
+     result.list = await this.app.mysql.query(sql);
      return result
    }
    async getItem(id) {

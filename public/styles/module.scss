@@ -2,24 +2,28 @@
   position: relative;
 
   &>.query {
-    position: absolute;
-    display: flex;
-    width: 450px;
-    top:0px;
-    right: 0px;
-    .el-input{
-      margin-right: 10px;
-      .el-input__inner{
-        border-radius: 0px 4px 4px 0px;
+    padding: 20px 20px 0px 20px;
+    border: 1px solid #ebeef5;
+
+    .el-input {
+      width: 320px;
+    }
+
+    .el-select {
+      .el-input {
+        width: 100px;
       }
     }
-    .el-select{
-      .el-input__inner{
-        border-radius: 4px 0px 0px 4px;
-      }
+
+    .btn {
+      position: absolute;
+      top: 20px;
+      left: 425px;
     }
   }
-
+  &>.operation{
+    padding-top: 20px;
+  }
   &>.list {
     padding-top: 20px;
   }
