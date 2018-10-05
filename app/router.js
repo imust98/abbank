@@ -22,4 +22,10 @@ module.exports = app => {
   router.delete('/api/person/delete/:id', controller.person.delete); 
   router.put('/api/person/:id', controller.person.update); 
   router.get('/api/person/:id', controller.person.item); 
+  router.post('/api/company/add', controller.company.create); 
+  router.post('/api/company/credit/:id', controller.company.addCredit); 
+  router.get('/api/company/list', controller.company.list); 
+  router.delete('/api/company/delete/:id', controller.company.delete); 
+  router.put('/api/company/:id', controller.company.update); 
+  router.get('/api/company/:id', controller.company.item); 
 };

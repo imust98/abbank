@@ -1,11 +1,14 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Layout from '../views/layout/index.vue';
-import PersonView from '@/views/customerManage/personList.vue';
-import PersonCreate from '@/views/customerManage/person.vue';
+import PersonView from '@/views/customerManage/person/personList.vue';
+import PersonCreate from '@/views/customerManage/person/person.vue';
+import PersonModify from '@/views/customerManage/person/personModify.vue';
 import PersonCredit from '@/views/customerManage/credit.vue';
-import PersonModify from '@/views/customerManage/personModify.vue';
-import CompanyView from '@/views/customerManage/company.vue';
+import CompanyCredit from '@/views/customerManage/credit.vue';
+import CompanyView from '@/views/customerManage/company/companyList.vue';
+import CompanyCreate from '@/views/customerManage/company/company.vue';
+import CompanyModify from '@/views/customerManage/company/companyModify.vue';
 Vue.use(Router);
 
 
@@ -61,11 +64,41 @@ export const constantRouterMap = [
         }
       },
       {
-        path: 'company',
+        path: 'company/list',
         component: CompanyView,
-        name:"company",
+        name:"companyList",
         meta: {
           title: '企业客户',
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'company/create',
+        component: CompanyCreate,
+        hidden: true,
+        name:"CompanyCreate",
+        meta: {
+          title: '添加企业客户',
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'company/addCredit/:id',
+        component: CompanyCredit,
+        hidden: true,
+        name:"companyCredit",
+        meta: {
+          title: '添加信用信息',
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'company/modify/:id',
+        component: CompanyModify,
+        hidden: true,
+        name:"CompanyModify",
+        meta: {
+          title: '修改企业信息',
           roles: ['admin'] // or you can only set roles in sub nav
         }
       }

@@ -7,6 +7,7 @@ import permission from './modules/permission';
 import app from './modules/app';
 import user from './modules/user';
 import person from './modules/person';
+import company from './modules/company';
 import getters from './getters';
 Vue.use(Vuex);
 const store = new Vuex.Store({
@@ -15,7 +16,8 @@ const store = new Vuex.Store({
     permission,
     app,
     user,
-    person
+    person,
+    company
   },
   getters
 });
