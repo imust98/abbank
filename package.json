@@ -17,6 +17,7 @@
     "egg": "^2.2.1",
     "egg-scripts": "^2.5.0",
     "egg-view-ejs": "^2.0.0",
+    "json2csv": "^4.2.1",
     "normalize.css": "7.0.0",
     "querystring": "^0.2.0",
     "stream-to-array": "^2.3.0",

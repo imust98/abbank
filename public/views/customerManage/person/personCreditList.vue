@@ -30,7 +30,7 @@
     </div>
     <div class="operation">
       <el-button type="primary" icon="el-icon-plus" @click="handleCreate">添加人员</el-button>
-      <el-button type="primary" icon="el-icon-download"><a href="/api/person/ppp/download">导出Excel</a></el-button>
+      <el-button type="primary" icon="el-icon-download" @click="handleCreate">导出Excel</el-button>
     </div>
     <div class="list">
       <el-table

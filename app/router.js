@@ -28,4 +28,5 @@ module.exports = app => {
   router.delete('/api/company/delete/:id', controller.company.delete); 
   router.put('/api/company/:id', controller.company.update); 
   router.get('/api/company/:id', controller.company.item); 
+  router.get('/api/person/ppp/download',controller.person.download)
 };

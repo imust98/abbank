@@ -2,6 +2,9 @@
 
 const BaseController = require('./base');
 const querystring = require("querystring");
+const fs = require('fs');
+const json2csv = require('json2csv').parse;
+const path = require('path');
 // const qs = require('querystring');
 class PersonController extends BaseController {
   async create() {
@@ -76,6 +79,37 @@ class PersonController extends BaseController {
     this.setModel({
       result: item
     });
+  }
+  async download() {
+    const {
+      ctx
+    } = this;
+    const fields = ['car', 'price', 'color'];
+    const myCars = [{
+      "car": "Audi",
+      "price": 40000,
+      "color": "blue"
+    }, {
+      "car": "BMW",
+      "price": 35000,
+      "color": "black"
+    }, {
+      "car": "Porsche",
+      "price": 60000,
+      "color": "green"
+    }];
+
+    let csv = json2csv(
+      myCars,
+      fields
+    );
+    const fileName = new Date().getTime()+'.csv';
+    const filePath = path.resolve(this.app.config.static.dir,fileName );
+    fs.writeFileSync(filePath, csv);
+    //ctx.attachment 将 Content-Disposition 设置为 “附件” 以指示客户端提示下载
+    this.ctx.attachment(fileName);
+    this.ctx.set('Content-Type', 'application/octet-stream');
+    this.ctx.body = fs.createReadStream(filePath);
   }
 }
 
