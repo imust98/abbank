@@ -107,43 +107,43 @@ export const constantRouterMap = [
           title: '修改企业信息',
           roles: ['admin'] // or you can only set roles in sub nav
         }
-      },
-      {
-        path: 'person/credit/list',
-        component: PersonCreditView,
-        name:"personCreditList",
-        meta: {
-          title: '信用信息',
-          roles: ['admin'] // or you can only set roles in sub nav
-        }
-      },
-      {
-        path: 'person/loan/list',
-        component: PersonLoanView,
-        name:"personLoanList",
-        meta: {
-          title: '贷款信息',
-          roles: ['admin'] // or you can only set roles in sub nav
-        }
-      },
-      {
-        path: 'person/it/list',
-        component: PersonItView,
-        name:"personItList",
-        meta: {
-          title: '信息员',
-          roles: ['admin'] // or you can only set roles in sub nav
-        }
-      },
-      {
-        path: 'person/black/list',
-        component: PersonBlackView,
-        name:"personBlackList",
-        meta: {
-          title: '黑名单',
-          roles: ['admin'] // or you can only set roles in sub nav
-        }
       }
+      // {
+      //   path: 'person/credit/list',
+      //   component: PersonCreditView,
+      //   name:"personCreditList",
+      //   meta: {
+      //     title: '信用信息',
+      //     roles: ['admin'] // or you can only set roles in sub nav
+      //   }
+      // },
+      // {
+      //   path: 'person/loan/list',
+      //   component: PersonLoanView,
+      //   name:"personLoanList",
+      //   meta: {
+      //     title: '贷款信息',
+      //     roles: ['admin'] // or you can only set roles in sub nav
+      //   }
+      // },
+      // {
+      //   path: 'person/it/list',
+      //   component: PersonItView,
+      //   name:"personItList",
+      //   meta: {
+      //     title: '信息员',
+      //     roles: ['admin'] // or you can only set roles in sub nav
+      //   }
+      // },
+      // {
+      //   path: 'person/black/list',
+      //   component: PersonBlackView,
+      //   name:"personBlackList",
+      //   meta: {
+      //     title: '黑名单',
+      //     roles: ['admin'] // or you can only set roles in sub nav
+      //   }
+      // }
     ]
   }
 ];

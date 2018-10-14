@@ -6,32 +6,39 @@ const fs = require('fs');
 const json2csv = require('json2csv').parse;
 const path = require('path');
 // const qs = require('querystring');
-class PersonController extends BaseController {
+class CustomerController extends BaseController {
   async create() {
     const {
       ctx
     } = this;
-    const result = await ctx.service.person.create(ctx.request.body);
-    const person = await ctx.service.person.getItem(parseInt(result.id));
-    this.setModel({
-      result: person
-    });
-  }
-  async addCredit() {
     const {
-      ctx
-    } = this;
-    const {
-      id
+      type
     } = ctx.params;
-    const pid = parseInt(id);
-    const result = await ctx.service.person.addCredit(pid, ctx.request.body);
-    const person = await ctx.service.person.getItem(parseInt(result.id));
-
+    let customer_type = 1;
+    if(type === 'company') {
+      customer_type = 2;
+    }
+    const result = await ctx.service.customer.create(ctx.request.body,customer_type);
+    const customer = await ctx.service.customer.getItem(parseInt(result.id),customer_type);
     this.setModel({
-      result: person
+      result: customer
     });
   }
+  // async addCredit() {
+  //   const {
+  //     ctx
+  //   } = this;
+  //   const {
+  //     id
+  //   } = ctx.params;
+  //   const pid = parseInt(id);
+  //   const result = await ctx.service.person.addCredit(pid, ctx.request.body);
+  //   const person = await ctx.service.person.getItem(parseInt(result.id));
+
+  //   this.setModel({
+  //     result: person
+  //   });
+  // }
   async delete() {
     const {
       ctx
@@ -39,10 +46,10 @@ class PersonController extends BaseController {
     const {
       id
     } = ctx.params;
-    const person = await ctx.service.person.delete(id);
+    const customer = await ctx.service.customer.delete(id);
 
     this.setModel({
-      result: person
+      result: customer
     });
   }
   async update() {
@@ -55,7 +62,7 @@ class PersonController extends BaseController {
     const result = await ctx.service.person.update(parseInt(id), ctx.request.body);
     const person = await ctx.service.person.getItem(parseInt(id));
     this.setModel({
-      result: person
+      result: customer
     });
   }
   async list() {
@@ -75,7 +82,7 @@ class PersonController extends BaseController {
     const {
       id
     } = ctx.params;
-    const item = await ctx.service.person.getItem(parseInt(id));
+    const item = await ctx.service.customer.getItem(parseInt(id));
     this.setModel({
       result: item
     });
@@ -103,8 +110,8 @@ class PersonController extends BaseController {
       myCars,
       fields
     );
-    const fileName = new Date().getTime()+'.csv';
-    const filePath = path.resolve(this.app.config.static.dir,fileName );
+    const fileName = new Date().getTime() + '.csv';
+    const filePath = path.resolve(this.app.config.static.dir, fileName);
     fs.writeFileSync(filePath, csv);
     //ctx.attachment 将 Content-Disposition 设置为 “附件” 以指示客户端提示下载
     this.ctx.attachment(fileName);
@@ -113,4 +120,4 @@ class PersonController extends BaseController {
   }
 }
 
-module.exports = PersonController;
+module.exports = CustomerController;

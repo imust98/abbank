@@ -1,8 +1,22 @@
 <template>
   <div class="m-layout">
+    <div class="operation">
+      <el-button type="primary" icon="el-icon-plus" @click="handleCreate">添加人员</el-button>
+      <el-button type="primary" icon="el-icon-download"><a href="/api/person/ppp/download">导出Excel</a></el-button>
+    </div>
     <div class="query">
-      <el-form :model="query" class="demo-form-inline">
-        <el-form-item label="分类筛选">
+      <el-form :model="query" :inline="true" class="form-inline">
+        <el-form-item label="人员分类">
+          <el-select v-model="query.type" clearable placeholder="请选择">
+          <el-option
+            v-for="item in personType"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+        </el-form-item>
+        <el-form-item label="统计分类">
           <el-select v-model="query.type" clearable placeholder="请选择">
           <el-option
             v-for="item in optionsType"
@@ -12,26 +26,18 @@
           </el-option>
         </el-select>
         </el-form-item>
-        <el-form-item label="条件筛选">
-          <el-select v-model="query.keyword" clearable placeholder="请选择">
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
-          </el-select>
-          <el-input  v-model="query.value" placeholder="请输入内容"></el-input>
+        <el-form-item label="姓名">
+          <el-input  v-model="query.value" placeholder="请输入姓名"></el-input>
         </el-form-item>
-        <div class="btn">
+        <el-form-item label="ID编号">
+          <el-input  v-model="query.value" placeholder="请输入ID编号"></el-input>
+        </el-form-item>
+        <el-form-item>
           <el-button type="primary" icon="el-icon-search" @click="handleQuery">查询</el-button>
-        </div>
+        </el-form-item>
       </el-form>
     </div>
-    <div class="operation">
-      <el-button type="primary" icon="el-icon-plus" @click="handleCreate">添加人员</el-button>
-      <el-button type="primary" icon="el-icon-download"><a href="/api/person/ppp/download">导出Excel</a></el-button>
-    </div>
+    
     <div class="list">
       <el-table
       :data="personList"
@@ -64,10 +70,10 @@
       <el-table-column label="操作">
         <template slot-scope="scope">
           <div>
-            <el-button v-if="!scope.row.credit_id"
+            <!-- <el-button v-if="!scope.row.credit_id"
             size="mini"
             type="primary"
-            @click="handleAddCredit(scope.$index, scope.row)">添加信用信息</el-button>
+            @click="handleAddCredit(scope.$index, scope.row)">添加信用信息</el-button> -->
             <el-button
             size="mini"
             type="primary"
@@ -124,6 +130,16 @@ export default {
       }, {
         value: 'card_id',
         label: '身份证号'
+      }],
+      personType: [{
+        value: 1,
+        label: '普通客户'
+      },{
+        value: 2,
+        label: '信息员'
+      },{
+        value: 3,
+        label: '黑名单'
       }],
       optionsType: [{
         value: 'credit',

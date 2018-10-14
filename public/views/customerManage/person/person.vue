@@ -5,8 +5,13 @@
       <el-form-item label="姓名" prop="name">
         <el-input v-model="ruleForm.name"></el-input>
       </el-form-item>
-      <el-form-item label="年龄" prop="age">
-        <el-input v-model="ruleForm.age"></el-input>
+      <el-form-item label="出生年月" prop="birthday">
+        <el-date-picker
+            v-model="ruleForm.birthday"
+            type="date"
+            value-format="timestamp"
+            placeholder="选择日期">
+          </el-date-picker>
       </el-form-item>
       <el-form-item label="性别" prop="sex">
         <el-radio-group v-model="ruleForm.sex">
@@ -35,6 +40,27 @@
       <el-form-item label="家庭成员编号" prop="spouse_id">
         <el-input v-model="ruleForm.spouse_id"></el-input>
       </el-form-item>
+      <el-form-item label="客户类型">
+          <el-select v-model="ruleForm.type"  placeholder="请选择">
+          <el-option
+            v-for="item in personType"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item v-if="ruleForm.type === 2" label="工号" prop="employee_id">
+        <el-input v-model="ruleForm.employee_id"></el-input>
+      </el-form-item>
+      <el-form-item v-if="ruleForm.type === 2" label="开始日期" prop="employee_start_time">
+        <el-date-picker
+            v-model="ruleForm.employee_start_time"
+            type="date"
+            value-format="timestamp"
+            placeholder="选择日期">
+          </el-date-picker>
+      </el-form-item>
       <div class="form-button">
         <el-form-item>
           <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
@@ -52,7 +78,7 @@ export default {
       female: 1,
       ruleForm: {
         name: '',
-        age: '',
+        birthday: '',
         sex: 0,
         card_id: '',
         phone: '',
@@ -60,7 +86,10 @@ export default {
         home_address: '',
         unit_address: '',
         income: '',
-        spouse_id: ''
+        spouse_id: '',
+        type: 1,
+        employee_id: '',
+        employee_start_time: ''
       },
       rules: {
         name: [
@@ -70,7 +99,17 @@ export default {
         sex: [
           { required: true, message: '请选择性别', trigger: 'change' }
         ]
-      }
+      },
+      personType: [{
+        value: 1,
+        label: '普通客户'
+      }, {
+        value: 2,
+        label: '信息员'
+      }, {
+        value: 3,
+        label: '黑名单'
+      }]
     };
   },
   methods: {

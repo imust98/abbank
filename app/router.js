@@ -16,17 +16,16 @@ module.exports = app => {
   router.get(/\/customer\/*/, app.middlewares.auth(), controller.home.detail);
   router.post('/api/user/login', controller.user.login);
   router.post('/api/user/logout', controller.user.logout); 
-  router.post('/api/person/add', controller.person.create); 
-  router.post('/api/person/credit/:id', controller.person.addCredit); 
-  router.get('/api/person/list', controller.person.list); 
-  router.delete('/api/person/delete/:id', controller.person.delete); 
-  router.put('/api/person/:id', controller.person.update); 
-  router.get('/api/person/:id', controller.person.item); 
+  router.post('/api/:type/add', controller.customer.create); 
+  router.get('/api/:type/list', controller.customer.list); 
+  router.delete('/api/:type/delete/:id', controller.customer.delete); 
+  router.put('/api/:customer/:id', controller.customer.update); 
+  router.get('/api/:type/:id', controller.customer.item); 
   router.post('/api/company/add', controller.company.create); 
   router.post('/api/company/credit/:id', controller.company.addCredit); 
   router.get('/api/company/list', controller.company.list); 
   router.delete('/api/company/delete/:id', controller.company.delete); 
   router.put('/api/company/:id', controller.company.update); 
   router.get('/api/company/:id', controller.company.item); 
-  router.get('/api/person/ppp/download',controller.person.download)
+  router.get('/api/:type/ppp/download',controller.customer.download)
 };

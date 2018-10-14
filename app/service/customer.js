@@ -1,26 +1,37 @@
  const BaseService = require('./base');
- class PersonService extends BaseService {
-   async create(data) {
-     data.spouse_id = parseInt(data.spouse_id || 0);
-     const result = await this.app.mysql.insert('customer_person', data);
-     return (result && {
-       id: result.insertId
-     }) || {};
-   }
-   async addCredit(pid, data) {
-     const result = await this.app.mysql.insert('customer_credit', Object.assign(data, {
-       pid: pid
-     }));
-     if (result && result.affectedRows === 1) {
-       // 客户表信息写入信用id
-       const res = await this.app.mysql.update('customer_person', {
-         'id': pid,
-         'credit_id': result.insertId
+ const _ = require('lodash');
+ class CustomerService extends BaseService {
+   async create(data, customer_type) {
+     const result = await this.app.mysql.beginTransactionScope(async conn => {
+       const res1 = await conn.insert('customer_base', {
+         name: data.name,
+         customer_type: data.customer_type
        });
+       const res2 = await conn.insert('customer_credit', {
+         customer_id: res1.insertId
+       });
+       const res3 = await conn.insert('customer_loans', {
+         customer_id: res1.insertId
+       });
+       const _data = Object.assign({}, data);
+       delete _data.name;
+       delete _data.customer_type;
+       if (customer_type === 1) {
+         const res4 = await conn.insert('customer_person', Object.assign({}, _data, {
+           customer_id: res1.insertId
+         }));
+       } else {
+         const res5 = await conn.insert('customer_customer', Object.assign({}, _data, {
+           customer_id: res1.insertId
+         }));
+       }
+       return {
+         id: res1.insertId
+       };
+     }, this.ctx);
+     return {
+       id: result.id
      }
-     return (result && {
-       id: pid
-     }) || {};
    }
    async delete(id) {
      const result = await this.app.mysql.delete('customer_person', {
@@ -94,21 +105,27 @@
      result.list = await this.app.mysql.query(sql);
      return result
    }
-   async getItem(id) {
-     const result = await this.app.mysql.get('customer_person', {
+   async getItem(id, customer_type) {
+     let table = 'customer_person';
+     if (customer_type === 2) {
+       table = 'customer_company';
+     }
+     const customer = await this.app.mysql.get('customer_base', {
        id
      });
-     if (result.credit_id) {
-       const res = await this.app.mysql.get('customer_credit', {
-         id: result.credit_id
-       });
-       for (let key in res) {
-         if (key !== 'id' && key !== 'pid') {
-           result[key] = res[key];
-         }
-       }
-     }
-     return result;
+     const extra = await this.app.mysql.get(table, {
+       customer_id: id
+     });
+     const credit = await this.app.mysql.get('customer_credit', {
+       customer_id: id
+     });
+     const loans = await this.app.mysql.get('customer_loans', {
+       customer_id: id
+     });
+     Object.assign(customer, _.omit(extra, ['id']));
+     Object.assign(customer, _.omit(credit, ['id']));
+     Object.assign(customer, _.omit(loans, ['id']));
+     return customer;
    }
  }
- module.exports = PersonService;
+ module.exports = CustomerService;

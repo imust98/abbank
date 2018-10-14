@@ -1,12 +1,14 @@
 .m-layout {
   position: relative;
-
+  &>.operation {
+    padding-top: 20px;
+  }
   &>.query {
+    margin-top: 20px;
     padding: 20px 20px 0px 20px;
     border: 1px solid #ebeef5;
-
     .el-input {
-      width: 320px;
+      width: 150px;
     }
 
     .el-select {
@@ -14,16 +16,8 @@
         width: 100px;
       }
     }
+  }
 
-    .btn {
-      position: absolute;
-      top: 20px;
-      left: 425px;
-    }
-  }
-  &>.operation{
-    padding-top: 20px;
-  }
   &>.list {
     padding-top: 20px;
   }

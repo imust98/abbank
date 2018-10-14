@@ -70,10 +70,10 @@
       <el-table-column label="操作">
         <template slot-scope="scope">
           <div>
-            <el-button v-if="!scope.row.credit_id"
+            <!-- <el-button v-if="!scope.row.credit_id"
             size="mini"
             type="primary"
-            @click="handleAddCredit(scope.$index, scope.row)">添加信用信息</el-button>
+            @click="handleAddCredit(scope.$index, scope.row)">添加信用信息</el-button> -->
             <el-button
             size="mini"
             type="primary"

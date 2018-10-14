@@ -5,8 +5,13 @@
       <el-form-item label="姓名" prop="name">
         <el-input v-model="ruleForm.name"></el-input>
       </el-form-item>
-      <el-form-item label="年龄" prop="age">
-        <el-input v-model="ruleForm.age"></el-input>
+      <el-form-item label="出生年月" prop="birthday">
+        <el-date-picker
+            v-model="ruleForm.birthday"
+            type="date"
+            value-format="timestamp"
+            placeholder="选择日期">
+          </el-date-picker>
       </el-form-item>
       <el-form-item label="性别" prop="sex">
         <el-radio-group v-model="ruleForm.sex">
@@ -35,10 +40,31 @@
        <el-form-item label="家庭成员编号" prop="spouse_id">
         <el-input v-model="ruleForm.spouse_id"></el-input>
       </el-form-item>
-      <div v-if="ruleForm.credit_id">
+      <el-form-item label="客户类型">
+          <el-select v-model="ruleForm.type"  placeholder="请选择">
+          <el-option
+            v-for="item in personType"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item v-if="ruleForm.type === 2" label="工号" prop="employee_id">
+        <el-input v-model="ruleForm.employee_id"></el-input>
+      </el-form-item>
+      <el-form-item v-if="ruleForm.type === 2" label="开始日期" prop="employee_start_time">
+        <el-date-picker
+            v-model="ruleForm.employee_start_time"
+            type="date"
+            value-format="timestamp"
+            placeholder="选择日期">
+          </el-date-picker>
+      </el-form-item>
+      <div>
         <div class="title">信用信息</div>
         <el-form-item label="信用证编号" prop="credit_id">
-          <el-input v-model="ruleForm.credit_id" disabled></el-input>
+          <el-input v-model="ruleForm.credit_id"></el-input>
         </el-form-item>
         <el-form-item label="信用证发放日" prop="credit_starttime">
           <el-date-picker
@@ -61,6 +87,20 @@
         </el-form-item>
         <el-form-item label="信用证授信级别" prop="credit_level">
           <el-input v-model="ruleForm.credit_level"></el-input>
+        </el-form-item>
+        <el-form-item label="客户经理" prop="customer_manager">
+          <el-input v-model="ruleForm.credit_level"></el-input>
+        </el-form-item>
+        <el-form-item label="销户日期" prop="destroy_time">
+          <el-date-picker
+            v-model="ruleForm.destroy_time"
+            type="date"
+            value-format="timestamp"
+            placeholder="选择日期">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="销户原因" prop="destroy_reason">
+          <el-input v-model="ruleForm.destroy_reason"></el-input>
         </el-form-item>
       </div>
       <div class="title">贷款信息</div>
@@ -93,6 +133,39 @@
       <el-form-item label="担保人编码" prop="loans_bondsman_ids">
         <el-input v-model="ruleForm.loans_bondsman_ids"></el-input>
       </el-form-item>
+      <el-form-item label="主要负责人" prop="loans_bondsman_ids">
+        <el-input v-model="ruleForm.loans_bondsman_ids"></el-input>
+      </el-form-item>
+      <el-form-item label="次要负责人" prop="loans_bondsman_ids">
+        <el-input v-model="ruleForm.loans_bondsman_ids"></el-input>
+      </el-form-item>
+      <el-form-item label="贷款用途" prop="loans_bondsman_ids">
+        <el-input v-model="ruleForm.loans_bondsman_ids"></el-input>
+      </el-form-item>
+      <el-form-item label="贷款品种" prop="loans_bondsman_ids">
+        <el-input v-model="ruleForm.loans_bondsman_ids"></el-input>
+      </el-form-item>
+      <el-form-item label="贷款类型" prop="loans_bondsman_ids">
+        <el-input v-model="ruleForm.loans_bondsman_ids"></el-input>
+      </el-form-item>
+      <el-form-item label="担保方式" prop="loans_bondsman_ids">
+        <el-input v-model="ruleForm.loans_bondsman_ids"></el-input>
+      </el-form-item>
+      <el-form-item label="贷款状态" prop="loans_bondsman_ids">
+        <el-input v-model="ruleForm.loans_bondsman_ids"></el-input>
+      </el-form-item>
+      <el-form-item label="行业分类" prop="loans_bondsman_ids">
+        <el-input v-model="ruleForm.loans_bondsman_ids"></el-input>
+      </el-form-item>
+      <el-form-item label="经营性分类" prop="loans_bondsman_ids">
+        <el-input v-model="ruleForm.loans_bondsman_ids"></el-input>
+      </el-form-item>
+      <el-form-item label="利息收入" prop="loans_bondsman_ids">
+        <el-input v-model="ruleForm.loans_bondsman_ids"></el-input>
+      </el-form-item>
+      <el-form-item label="逾期欠款" prop="loans_bondsman_ids">
+        <el-input v-model="ruleForm.loans_bondsman_ids"></el-input>
+      </el-form-item>
       <div class="form-button">
         <el-form-item>
           <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
@@ -112,7 +185,7 @@ export default {
       id: '',
       ruleForm: {
         name: '',
-        age: '',
+        birthday: '',
         sex: 0,
         card_id: '',
         phone: '',
@@ -121,6 +194,9 @@ export default {
         unit_address: '',
         income: '',
         spouse_id: '',
+        type: 1,
+        employee_id: '',
+        employee_start_time: '',
         credit_id: '',
         credit_starttime: '',
         credit_expiretime: '',
@@ -129,11 +205,22 @@ export default {
         loans_count: '',
         loans_deadline: '',
         loans_rate: '',
-        loans_bondsman_ids: '',
         lending_date: '',
         loans_balance: '',
         loans_subject: '',
-        repayment_method: ''
+        repayment_method: '',
+        loans_bondsman_ids: '',
+        primary_person: '',
+        minor_person: '',
+        loans_use: '',
+        loans_kind:'',
+        loans_type:'',
+        bondsman_method:'',
+        loans_status:'',
+        industry_classify:'',
+        business_classify:'',
+        interest_income:'',
+        overdue_loans:''
       },
       rules: {
         name: [
@@ -143,7 +230,17 @@ export default {
         sex: [
           { required: true, message: '请选择性别', trigger: 'change' }
         ]
-      }
+      },
+      personType: [{
+        value: 1,
+        label: '普通客户'
+      }, {
+        value: 2,
+        label: '信息员'
+      }, {
+        value: 3,
+        label: '黑名单'
+      }]
     };
   },
   methods: {
