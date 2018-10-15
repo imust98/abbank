@@ -17,7 +17,7 @@
         </el-select>
         </el-form-item>
         <el-form-item label="统计分类">
-          <el-select v-model="query.type" clearable placeholder="请选择">
+          <el-select v-model="query.statisticsType" clearable placeholder="请选择">
           <el-option
             v-for="item in optionsType"
             :key="item.value"
@@ -27,10 +27,10 @@
         </el-select>
         </el-form-item>
         <el-form-item label="姓名">
-          <el-input  v-model="query.value" placeholder="请输入姓名"></el-input>
+          <el-input  v-model="query.name" placeholder="请输入姓名"></el-input>
         </el-form-item>
         <el-form-item label="ID编号">
-          <el-input  v-model="query.value" placeholder="请输入ID编号"></el-input>
+          <el-input  v-model="query.id" placeholder="请输入ID编号"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" icon="el-icon-search" @click="handleQuery">查询</el-button>
@@ -117,8 +117,9 @@ export default {
         pageIndex: 1,
         pageSize: 10,
         type:'',
-        keyword: '',
-        value: ''
+        statisticsType:'',
+        name: '',
+        id: ''
       },
       responseQuery: {
         totalCount: 0,

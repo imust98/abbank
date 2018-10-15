@@ -41,7 +41,7 @@
         <el-input v-model="ruleForm.spouse_id"></el-input>
       </el-form-item>
       <el-form-item label="客户类型">
-          <el-select v-model="ruleForm.type"  placeholder="请选择">
+          <el-select v-model="ruleForm.person_type"  placeholder="请选择">
           <el-option
             v-for="item in personType"
             :key="item.value"
@@ -87,7 +87,7 @@ export default {
         unit_address: '',
         income: '',
         spouse_id: '',
-        type: 1,
+        person_type: 1,
         employee_id: '',
         employee_start_time: ''
       },

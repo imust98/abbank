@@ -107,22 +107,18 @@ export function param2Obj(url) {
   );
 }
 
-export function objectMerge(target, source) {
+export function mergeValue(ext, source) {
   /* Merges two  objects,
        giving the last one precedence */
 
-  if (typeof target !== 'object') {
-    target = {};
-  }
-  if (Array.isArray(source)) {
-    return source.slice();
-  }
-  Object.keys(source).forEach(property => {
-    const sourceProperty = source[property];
-    if (typeof sourceProperty === 'object') {
-      target[property] = objectMerge(target[property], sourceProperty);
+
+  let target = {};
+
+  Object.keys(ext).forEach(property => {
+    if (source[property]) {
+      target[property] = source[property];
     } else {
-      target[property] = sourceProperty;
+      target[property] = ext[property];
     }
   });
   return target;
@@ -184,8 +180,8 @@ export function assign(target, source) {
   return target;
 }
 
-export function hasProperty(data){
-  for(var o in data) {
+export function hasProperty(data) {
+  for (var o in data) {
     return true;
   }
   return false;

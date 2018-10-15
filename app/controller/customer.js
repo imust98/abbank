@@ -24,21 +24,6 @@ class CustomerController extends BaseController {
       result: customer
     });
   }
-  // async addCredit() {
-  //   const {
-  //     ctx
-  //   } = this;
-  //   const {
-  //     id
-  //   } = ctx.params;
-  //   const pid = parseInt(id);
-  //   const result = await ctx.service.person.addCredit(pid, ctx.request.body);
-  //   const person = await ctx.service.person.getItem(parseInt(result.id));
-
-  //   this.setModel({
-  //     result: person
-  //   });
-  // }
   async delete() {
     const {
       ctx
@@ -59,8 +44,8 @@ class CustomerController extends BaseController {
     const {
       id
     } = ctx.params;
-    const result = await ctx.service.person.update(parseInt(id), ctx.request.body);
-    const person = await ctx.service.person.getItem(parseInt(id));
+    const result = await ctx.service.customer.update(parseInt(id), ctx.request.body);
+    const customer = await ctx.service.customer.getItem(parseInt(id));
     this.setModel({
       result: customer
     });
@@ -69,8 +54,15 @@ class CustomerController extends BaseController {
     const {
       ctx
     } = this;
+    const {
+      type
+    } = ctx.params;
+    let customer_type = 1;
+    if(type === 'company') {
+      customer_type = 2;
+    }
     const params = querystring.parse(ctx.querystring);
-    const list = await ctx.service.person.getList(params);
+    const list = await ctx.service.customer.getList(params,customer_type);
     this.setModel({
       result: list
     });

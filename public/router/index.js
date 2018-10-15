@@ -6,10 +6,10 @@ import PersonCreate from '@/views/customerManage/person/person.vue';
 import PersonModify from '@/views/customerManage/person/personModify.vue';
 import PersonCredit from '@/views/customerManage/credit.vue';
 
-import PersonCreditView from '@/views/customerManage/person/personCreditList.vue';
-import PersonLoanView from '@/views/customerManage/person/personLoanList.vue';
-import PersonItView from '@/views/customerManage/person/personList.vue';
-import PersonBlackView from '@/views/customerManage/person/personList.vue';
+// import PersonCreditView from '@/views/customerManage/person/personCreditList.vue';
+// import PersonLoanView from '@/views/customerManage/person/personLoanList.vue';
+// import PersonItView from '@/views/customerManage/person/personList.vue';
+// import PersonBlackView from '@/views/customerManage/person/personList.vue';
 
 import CompanyCredit from '@/views/customerManage/credit.vue';
 import CompanyView from '@/views/customerManage/company/companyList.vue';
