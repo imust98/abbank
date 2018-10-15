@@ -1,89 +1,120 @@
 const BaseService = require('./base');
 const _ = require('lodash');
+// customer_type:1 个人客户 2 企业客户
 class CustomerService extends BaseService {
+
   async create(data, customer_type) {
     const result = await this.app.mysql.beginTransactionScope(async conn => {
-      const res1 = await conn.insert('customer_base', {
+      const res = await conn.insert('customer_base', {
         name: data.name,
         customer_type: data.customer_type
       });
-      // const res2 = await conn.insert('customer_credit', {
-      //   customer_id: res1.insertId
-      // });
-      // const res3 = await conn.insert('customer_loans', {
-      //   customer_id: res1.insertId
-      // });
       const _data = Object.assign({}, data);
       delete _data.name;
       delete _data.customer_type;
       if (customer_type === 1) {
-        const res4 = await conn.insert(
+        await conn.insert(
           'customer_person',
           Object.assign({}, _data, {
-            customer_id: res1.insertId
+            customer_id: res.insertId
           })
         );
       } else {
-        const res5 = await conn.insert(
+        await conn.insert(
           'customer_company',
           Object.assign({}, _data, {
-            customer_id: res1.insertId
+            customer_id: res.insertId
           })
         );
       }
       return {
-        id: res1.insertId
+        id: res.insertId
       };
     }, this.ctx);
     return {
       id: result.id
     };
   }
-  async delete(id) {
-    const result = await this.app.mysql.delete('customer_person', {
-      id: id
-    });
-    if (result && result.serverStatus === 2) {
-      return {
-        id: parseInt(id)
-      };
-    }
+  async delete(id, customer_type) {
+    const result = await this.app.mysql.beginTransactionScope(async conn => {
+        if (customer_type == 1) {
+          await conn.delete('customer_person', {
+            id: id
+          });
+        } else {
+          await conn.delete('customer_company', {
+            id: id
+          });
+        }
+        await conn.delete('customer_credit', {
+          customer_id: id
+        });
+        await conn.delete('customer_loans', {
+          customer_id: id
+        });
+      },
+      this.ctx);
+
     return result;
   }
   async update(id, data) {
-    let result = {};
     const table = 'customer_person';
     const formType = data.formType;
     delete data.formType;
     delete data.customer_type;
-    if (formType === 'base') {
-      const aa = await this.app.mysql.update('customer_base', {
-        id: id,
-        name: data.name
-      });
-      delete data.name;
-      result = await this.app.mysql.update(
-        table,
-        Object.assign(
-          {
-            id
-          },
-          data
-        )
-      );
-    } else if (data.formType === 'credit') {
-      result = await this.app.mysql.update('customer_credit', data, {
-        where: {
+    const result = await this.app.mysql.beginTransactionScope(async conn => {
+      if (formType === 'base') {
+        await conn.update('customer_base', {
+          id: id,
+          name: data.name
+        });
+        delete data.name;
+        await conn.update(
+          table,
+          Object.assign({
+              id
+            },
+            data
+          )
+        );
+      } else if (formType === 'credit') {
+        const item = await conn.get('customer_credit', {
           customer_id: id
+        });
+        if (item) {
+          await conn.update('customer_credit', data, {
+            where: {
+              customer_id: id
+            }
+          });
+        } else {
+          await conn.insert(
+            'customer_credit',
+            Object.assign(data, {
+              customer_id: id
+            })
+          );
         }
-      });
-    } else {
-      result = await this.app.mysql.update('customer_loans', data, {
-        where: {
+      } else {
+        const item = await conn.get('customer_loans', {
           customer_id: id
+        });
+        if (item) {
+          await conn.update('customer_loans', data, {
+            where: {
+              customer_id: id
+            }
+          });
+        } else {
+          await conn.insert(
+            'customer_loans',
+            Object.assign(data, {
+              customer_id: id
+            })
+          );
         }
-      });
-    }
+      }
+    }, this.ctx);
     return result;
   }
   async getList(params, customer_type) {
@@ -91,7 +122,6 @@ class CustomerService extends BaseService {
       list: [],
       query: {}
     };
-
     let sql = `select  cb.id,
      cb.name,
      cp.birthday,
@@ -103,16 +133,16 @@ class CustomerService extends BaseService {
      from customer_base cb`;
     if (params.statisticsType) {
       if (params.statisticsType === 1) {
-        sql += `inner join customer_person cp on cb.id = cp.customer_id`;
-        sql += `inner join customer_credit cc on cb.id = cc.customer_id`;
+        sql += ` inner join customer_person cp on cb.id = cp.customer_id`;
+        sql += ` inner join customer_credit cc on cb.id = cc.customer_id`;
       } else {
-        sql += `inner join customer_person cp on cb.id = cp.customer_id`;
-        sql += `inner join customer_loans cl on cb.id = cl.customer_id`;
+        sql += ` inner join customer_person cp on cb.id = cp.customer_id`;
+        sql += ` inner join customer_loans cl on cb.id = cl.customer_id`;
       }
     } else {
-      sql += `left join customer_person cp on cb.id = cp.customer_id`;
-      sql += `left join customer_credit cc on cb.id = cc.customer_id`;
-      sql += `left join customer_loans cl on cb.id = cl.customer_id`;
+      sql += ` left join customer_person cp on cb.id = cp.customer_id`;
+      sql += ` left join customer_credit cc on cb.id = cc.customer_id`;
+      sql += ` left join customer_loans cl on cb.id = cl.customer_id`;
     }
     sql += ` where 1 = 1`;
     if (params.name) {

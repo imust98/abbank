@@ -29,9 +29,14 @@ class CustomerController extends BaseController {
       ctx
     } = this;
     const {
-      id
+      id,
+      type
     } = ctx.params;
-    const customer = await ctx.service.customer.delete(id);
+    let customer_type = 1;
+    if(type === 'company') {
+      customer_type = 2;
+    }
+    const customer = await ctx.service.customer.delete(id,customer_type);
 
     this.setModel({
       result: customer
