@@ -19,7 +19,7 @@ module.exports = app => {
   router.post('/api/:type/add', controller.customer.create); 
   router.get('/api/:type/list', controller.customer.list); 
   router.delete('/api/:type/delete/:id', controller.customer.delete); 
-  router.put('/api/:customer/:id', controller.customer.update); 
+  router.put('/api/:type/:id', controller.customer.update); 
   router.get('/api/:type/:id', controller.customer.item); 
   // router.post('/api/company/add', controller.company.create); 
   // router.post('/api/company/credit/:id', controller.company.addCredit); 

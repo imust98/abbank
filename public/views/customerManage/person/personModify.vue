@@ -150,38 +150,38 @@
           <el-form-item label="担保人编码" prop="loans_bondsman_ids">
             <el-input v-model="ruleForm3.loans_bondsman_ids"></el-input>
           </el-form-item>
-          <el-form-item label="主要负责人" prop="loans_bondsman_ids">
-            <el-input v-model="ruleForm3.loans_bondsman_ids"></el-input>
+          <el-form-item label="主要负责人" prop="primary_person">
+            <el-input v-model="ruleForm3.primary_person"></el-input>
           </el-form-item>
-          <el-form-item label="次要负责人" prop="loans_bondsman_ids">
-            <el-input v-model="ruleForm3.loans_bondsman_ids"></el-input>
+          <el-form-item label="次要负责人" prop="minor_person">
+            <el-input v-model="ruleForm3.minor_person"></el-input>
           </el-form-item>
-          <el-form-item label="贷款用途" prop="loans_bondsman_ids">
-            <el-input v-model="ruleForm3.loans_bondsman_ids"></el-input>
+          <el-form-item label="贷款用途" prop="loans_use">
+            <el-input v-model="ruleForm3.loans_use"></el-input>
           </el-form-item>
-          <el-form-item label="贷款品种" prop="loans_bondsman_ids">
-            <el-input v-model="ruleForm3.loans_bondsman_ids"></el-input>
+          <el-form-item label="贷款品种" prop="loans_kind">
+            <el-input v-model="ruleForm3.loans_kind"></el-input>
           </el-form-item>
-          <el-form-item label="贷款类型" prop="loans_bondsman_ids">
-            <el-input v-model="ruleForm3.loans_bondsman_ids"></el-input>
+          <el-form-item label="贷款类型" prop="loans_type">
+            <el-input v-model="ruleForm3.loans_type"></el-input>
           </el-form-item>
-          <el-form-item label="担保方式" prop="loans_bondsman_ids">
-            <el-input v-model="ruleForm3.loans_bondsman_ids"></el-input>
+          <el-form-item label="担保方式" prop="bondsman_method">
+            <el-input v-model="ruleForm3.bondsman_method"></el-input>
           </el-form-item>
-          <el-form-item label="贷款状态" prop="loans_bondsman_ids">
-            <el-input v-model="ruleForm3.loans_bondsman_ids"></el-input>
+          <el-form-item label="贷款状态" prop="loans_status">
+            <el-input v-model="ruleForm3.loans_status"></el-input>
           </el-form-item>
-          <el-form-item label="行业分类" prop="loans_bondsman_ids">
-            <el-input v-model="ruleForm3.loans_bondsman_ids"></el-input>
+          <el-form-item label="行业分类" prop="industry_classify">
+            <el-input v-model="ruleForm3.industry_classify"></el-input>
           </el-form-item>
-          <el-form-item label="经营性分类" prop="loans_bondsman_ids">
-            <el-input v-model="ruleForm3.loans_bondsman_ids"></el-input>
+          <el-form-item label="经营性分类" prop="business_classify">
+            <el-input v-model="ruleForm3.business_classify"></el-input>
           </el-form-item>
-          <el-form-item label="利息收入" prop="loans_bondsman_ids">
-            <el-input v-model="ruleForm3.loans_bondsman_ids"></el-input>
+          <el-form-item label="利息收入" prop="interest_income">
+            <el-input v-model="ruleForm3.interest_income"></el-input>
           </el-form-item>
-          <el-form-item label="逾期欠款" prop="loans_bondsman_ids">
-            <el-input v-model="ruleForm3.loans_bondsman_ids"></el-input>
+          <el-form-item label="逾期欠款" prop="overdue_loans">
+            <el-input v-model="ruleForm3.overdue_loans"></el-input>
           </el-form-item>
           <div class="form-button">
             <el-form-item>

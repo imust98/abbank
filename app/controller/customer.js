@@ -15,11 +15,11 @@ class CustomerController extends BaseController {
       type
     } = ctx.params;
     let customer_type = 1;
-    if(type === 'company') {
+    if (type === 'company') {
       customer_type = 2;
     }
-    const result = await ctx.service.customer.create(ctx.request.body,customer_type);
-    const customer = await ctx.service.customer.getItem(parseInt(result.id),customer_type);
+    const result = await ctx.service.customer.create(ctx.request.body, customer_type);
+    const customer = await ctx.service.customer.getItem(parseInt(result.id), customer_type);
     this.setModel({
       result: customer
     });
@@ -33,10 +33,10 @@ class CustomerController extends BaseController {
       type
     } = ctx.params;
     let customer_type = 1;
-    if(type === 'company') {
+    if (type === 'company') {
       customer_type = 2;
     }
-    const customer = await ctx.service.customer.delete(parseInt(id),customer_type);
+    const customer = await ctx.service.customer.delete(parseInt(id), customer_type);
 
     this.setModel({
       result: customer
@@ -47,9 +47,14 @@ class CustomerController extends BaseController {
       ctx
     } = this;
     const {
+      type,
       id
     } = ctx.params;
-    const result = await ctx.service.customer.update(parseInt(id), ctx.request.body);
+    let customer_type = 1;
+    if (type === 'company') {
+      customer_type = 2;
+    }
+    const result = await ctx.service.customer.update(parseInt(id), ctx.request.body,customer_type);
     const customer = await ctx.service.customer.getItem(parseInt(id));
     this.setModel({
       result: customer
@@ -63,11 +68,11 @@ class CustomerController extends BaseController {
       type
     } = ctx.params;
     let customer_type = 1;
-    if(type === 'company') {
+    if (type === 'company') {
       customer_type = 2;
     }
     const params = querystring.parse(ctx.querystring);
-    const list = await ctx.service.customer.getList(params,customer_type);
+    const list = await ctx.service.customer.getList(params, customer_type);
     this.setModel({
       result: list
     });
@@ -77,9 +82,14 @@ class CustomerController extends BaseController {
       ctx
     } = this;
     const {
-      id
+      id,
+      type
     } = ctx.params;
-    const item = await ctx.service.customer.getItem(parseInt(id));
+    let customer_type = 1;
+    if (type === 'company') {
+      customer_type = 2;
+    }
+    const item = await ctx.service.customer.getItem(parseInt(id),customer_type);
     this.setModel({
       result: item
     });

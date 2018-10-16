@@ -60,11 +60,13 @@ class CustomerService extends BaseService {
       id
     };
   }
-  async update(id, data) {
-    const table = 'customer_person';
+  async update(id, data,customer_type) {
+    let table = 'customer_person';
     const formType = data.formType;
     delete data.formType;
-    delete data.customer_type;
+    if (customer_type === 2) {
+      table = 'customer_company';
+    }
     const result = await this.app.mysql.beginTransactionScope(async conn => {
       if (formType === 'base') {
         await conn.update('customer_base', {
