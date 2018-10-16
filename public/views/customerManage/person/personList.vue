@@ -125,13 +125,6 @@ export default {
         totalCount: 0,
         totalPageCount: 0
       },
-      options: [{
-        value: 'name',
-        label: '姓名'
-      }, {
-        value: 'card_id',
-        label: '身份证号'
-      }],
       personType: [{
         value: 1,
         label: '普通客户'

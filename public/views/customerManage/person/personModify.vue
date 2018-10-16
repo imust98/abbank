@@ -286,7 +286,6 @@ export default {
           } else {
             data.formType = 'loans';
           }
-          debugger;
           this.$store.dispatch('ModifyPerson', { data, params: { id: this.id } }).then((result) => {
             this.$router.push('/customer/person/list');
           }).catch(function () {
