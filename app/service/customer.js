@@ -2,7 +2,6 @@ const BaseService = require('./base');
 const _ = require('lodash');
 // customer_type:1 个人客户 2 企业客户
 class CustomerService extends BaseService {
-
   async create(data, customer_type) {
     const result = await this.app.mysql.beginTransactionScope(async conn => {
       const res = await conn.insert('customer_base', {
@@ -37,25 +36,29 @@ class CustomerService extends BaseService {
   }
   async delete(id, customer_type) {
     const result = await this.app.mysql.beginTransactionScope(async conn => {
-        if (customer_type == 1) {
-          await conn.delete('customer_person', {
-            id: id
-          });
-        } else {
-          await conn.delete('customer_company', {
-            id: id
-          });
-        }
-        await conn.delete('customer_credit', {
+      await conn.delete('customer_base', {
+        id: id
+      });
+      if (customer_type == 1) {
+        await conn.delete('customer_person', {
           customer_id: id
         });
-        await conn.delete('customer_loans', {
+      } else {
+        await conn.delete('customer_company', {
           customer_id: id
         });
-      },
-      this.ctx);
+      }
+      await conn.delete('customer_credit', {
+        customer_id: id
+      });
+      await conn.delete('customer_loans', {
+        customer_id: id
+      });
+    }, this.ctx);
 
-    return result;
+    return {
+      id
+    };
   }
   async update(id, data) {
     const table = 'customer_person';
@@ -71,7 +74,8 @@ class CustomerService extends BaseService {
         delete data.name;
         await conn.update(
           table,
-          Object.assign({
+          Object.assign(
+            {
               id
             },
             data
