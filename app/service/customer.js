@@ -6,11 +6,10 @@ class CustomerService extends BaseService {
     const result = await this.app.mysql.beginTransactionScope(async conn => {
       const res = await conn.insert('customer_base', {
         name: data.name,
-        customer_type: data.customer_type
+        customer_type: customer_type
       });
       const _data = Object.assign({}, data);
       delete _data.name;
-      delete _data.customer_type;
       if (customer_type === 1) {
         await conn.insert(
           'customer_person',
@@ -60,7 +59,7 @@ class CustomerService extends BaseService {
       id
     };
   }
-  async update(id, data,customer_type) {
+  async update(id, data, customer_type) {
     let table = 'customer_person';
     const formType = data.formType;
     delete data.formType;
@@ -76,8 +75,7 @@ class CustomerService extends BaseService {
         delete data.name;
         await conn.update(
           table,
-          Object.assign(
-            {
+          Object.assign({
               id
             },
             data
@@ -128,6 +126,7 @@ class CustomerService extends BaseService {
       list: [],
       query: {}
     };
+    let table = 'customer_person';
     let sql = `select  cb.id,
      cb.name,
      cp.birthday,
@@ -137,16 +136,27 @@ class CustomerService extends BaseService {
      cp.hk_address,
      cp.home_address 
      from customer_base cb`;
+    if (customer_type === 2) {
+      table = 'customer_company';
+      sql = `select  cb.id,
+      cb.name,
+      cp.company_number,
+      cp.license_number,
+      cp.register_money,
+      cp.business_address,
+      cp.business_scope
+      from customer_base cb`;
+    }
     if (params.statisticsType) {
       if (params.statisticsType === 1) {
-        sql += ` inner join customer_person cp on cb.id = cp.customer_id`;
+        sql += ` inner join ${table} cp on cb.id = cp.customer_id`;
         sql += ` inner join customer_credit cc on cb.id = cc.customer_id`;
       } else {
-        sql += ` inner join customer_person cp on cb.id = cp.customer_id`;
+        sql += ` inner join ${table} cp on cb.id = cp.customer_id`;
         sql += ` inner join customer_loans cl on cb.id = cl.customer_id`;
       }
     } else {
-      sql += ` left join customer_person cp on cb.id = cp.customer_id`;
+      sql += ` left join ${table} cp on cb.id = cp.customer_id`;
       sql += ` left join customer_credit cc on cb.id = cc.customer_id`;
       sql += ` left join customer_loans cl on cb.id = cl.customer_id`;
     }
@@ -156,6 +166,9 @@ class CustomerService extends BaseService {
     }
     if (params.id) {
       sql += ` and cb.id = '${params.id}'`;
+    }
+    if(params.card_type){
+      sql += ` and cp.card_type = '${params.card_type}'`;
     }
     const totalList = await this.app.mysql.query(sql);
     result.query.totalCount = totalList.length;

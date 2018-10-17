@@ -7,9 +7,9 @@
     <div class="query">
       <el-form :model="query" :inline="true" class="form-inline">
         <el-form-item label="人员分类">
-          <el-select v-model="query.type" clearable placeholder="请选择">
+          <el-select v-model="query.card_type" clearable placeholder="请选择">
           <el-option
-            v-for="item in personType"
+            v-for="item in cardType"
             :key="item.value"
             :label="item.label"
             :value="item.value">
@@ -55,17 +55,20 @@
         width="60">
       </el-table-column>
       <el-table-column
-        prop="age"
-        width="60"
-        label="年龄">
+        prop="birthday"
+        width="150"
+        label="出生年月"
+        :formatter="formatBirthday">
       </el-table-column>
       <el-table-column
         prop="card_id"
+        width="150"
         label="身份证号">
       </el-table-column>
       <el-table-column
         prop="phone"
-        label="联系方式">
+        label="联系方式"
+        width="120">
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
@@ -103,6 +106,7 @@
   </div>
 </template>
 <script>
+import { parseTime } from '@/utils/index';
 export default {
   computed: {
     personList: {
@@ -116,8 +120,8 @@ export default {
       query: {
         pageIndex: 1,
         pageSize: 10,
-        type:'',
-        statisticsType:'',
+        card_type: 1,
+        statisticsType: '',
         name: '',
         id: ''
       },
@@ -125,26 +129,30 @@ export default {
         totalCount: 0,
         totalPageCount: 0
       },
-      personType: [{
+      cardType: [{
         value: 1,
         label: '普通客户'
-      },{
+      }, {
         value: 2,
         label: '信息员'
-      },{
+      }, {
         value: 3,
         label: '黑名单'
       }],
       optionsType: [{
         value: 'credit',
         label: '信用'
-      },{
+      }, {
         value: 'loans',
         label: '贷款'
       }]
     }
   },
   methods: {
+    formatBirthday(row) {
+      if (!row.birthday) return '--';
+      return parseTime(row.birthday);
+    },
     formatSex(row) {
       return ['男', '女'][row.sex];
     },

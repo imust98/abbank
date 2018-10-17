@@ -104,7 +104,8 @@ export default {
         special_industry_number:'',
         special_industry_expiry_time:'',
         open_account_number:'',
-        open_account_expiry_time:''
+        open_account_expiry_time:'',
+        card_type: 1
       },
       rules: {
         company_name: [

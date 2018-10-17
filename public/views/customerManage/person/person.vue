@@ -41,9 +41,9 @@
         <el-input v-model="ruleForm.spouse_id"></el-input>
       </el-form-item>
       <el-form-item label="客户类型">
-          <el-select v-model="ruleForm.person_type"  placeholder="请选择">
+          <el-select v-model="ruleForm.card_type"  placeholder="请选择">
           <el-option
-            v-for="item in personType"
+            v-for="item in cardType"
             :key="item.value"
             :label="item.label"
             :value="item.value">
@@ -87,7 +87,7 @@ export default {
         unit_address: '',
         income: '',
         spouse_id: '',
-        person_type: 1,
+        card_type: 1,
         employee_id: '',
         employee_start_time: ''
       },
@@ -100,7 +100,7 @@ export default {
           { required: true, message: '请选择性别', trigger: 'change' }
         ]
       },
-      personType: [{
+      cardType: [{
         value: 1,
         label: '普通客户'
       }, {
