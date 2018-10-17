@@ -42,7 +42,7 @@
             <el-input v-model="ruleForm1.spouse_id"></el-input>
           </el-form-item>
           <el-form-item label="客户类型">
-            <el-select v-model="ruleForm.card_type"  placeholder="请选择">
+            <el-select v-model="ruleForm1.card_type"  placeholder="请选择">
               <el-option
                 v-for="item in cardType"
                 :key="item.value"
