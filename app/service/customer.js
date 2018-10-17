@@ -167,7 +167,7 @@ class CustomerService extends BaseService {
     if (params.id) {
       sql += ` and cb.id = '${params.id}'`;
     }
-    if(params.card_type){
+    if (params.card_type) {
       sql += ` and cp.card_type = '${params.card_type}'`;
     }
     const totalList = await this.app.mysql.query(sql);
@@ -200,6 +200,42 @@ class CustomerService extends BaseService {
     Object.assign(customer, _.omit(credit, ['id']));
     Object.assign(customer, _.omit(loans, ['id']));
     return customer;
+  }
+  async getExportList(params, customer_type) {
+    let table = 'customer_person';
+    let sql = `select *
+     from customer_base cb`;
+    if (customer_type === 2) {
+      table = 'customer_company';
+      sql = `select * 
+      from customer_base cb`;
+    }
+    if (params.statisticsType) {
+      if (params.statisticsType === 1) {
+        sql += ` inner join ${table} cp on cb.id = cp.customer_id`;
+        sql += ` inner join customer_credit cc on cb.id = cc.customer_id`;
+      } else {
+        sql += ` inner join ${table} cp on cb.id = cp.customer_id`;
+        sql += ` inner join customer_loans cl on cb.id = cl.customer_id`;
+      }
+    } else {
+      sql += ` left join ${table} cp on cb.id = cp.customer_id`;
+      sql += ` left join customer_credit cc on cb.id = cc.customer_id`;
+      sql += ` left join customer_loans cl on cb.id = cl.customer_id`;
+    }
+    sql += ` where 1 = 1`;
+    if (params.name) {
+      sql += ` and cb.name = '${params.name}'`;
+    }
+    if (params.id) {
+      sql += ` and cb.id = '${params.id}'`;
+    }
+    if (params.card_type) {
+      sql += ` and cp.card_type = '${params.card_type}'`;
+    }
+    const result = await this.app.mysql.query(sql);
+
+    return result;
   }
 }
 module.exports = CustomerService;

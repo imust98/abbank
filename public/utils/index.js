@@ -4,13 +4,8 @@ export function parseTime(time, cFormat) {
     return null;
   }
   const format = '{y}-{m}-{d}';
-  let date;
-  if (typeof time === 'object') {
-    date = time;
-  } else {
-    if (('' + time).length === 10) time = parseInt(time) * 1000;
-    date = new Date(time);
-  }
+  let date = new Date(parseInt(time));
+  
   const formatObj = {
     y: date.getFullYear(),
     m: date.getMonth() + 1,

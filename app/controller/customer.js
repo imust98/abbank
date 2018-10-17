@@ -4,6 +4,7 @@ const BaseController = require('./base');
 const querystring = require("querystring");
 const fs = require('fs');
 const json2csv = require('json2csv').parse;
+const iconv = require('iconv-lite');
 const path = require('path');
 // const qs = require('querystring');
 class CustomerController extends BaseController {
@@ -54,7 +55,7 @@ class CustomerController extends BaseController {
     if (type === 'company') {
       customer_type = 2;
     }
-    const result = await ctx.service.customer.update(parseInt(id), ctx.request.body,customer_type);
+    const result = await ctx.service.customer.update(parseInt(id), ctx.request.body, customer_type);
     const customer = await ctx.service.customer.getItem(parseInt(id));
     this.setModel({
       result: customer
@@ -89,7 +90,7 @@ class CustomerController extends BaseController {
     if (type === 'company') {
       customer_type = 2;
     }
-    const item = await ctx.service.customer.getItem(parseInt(id),customer_type);
+    const item = await ctx.service.customer.getItem(parseInt(id), customer_type);
     this.setModel({
       result: item
     });
@@ -98,28 +99,26 @@ class CustomerController extends BaseController {
     const {
       ctx
     } = this;
-    const fields = ['car', 'price', 'color'];
-    const myCars = [{
-      "car": "Audi",
-      "price": 40000,
-      "color": "blue"
-    }, {
-      "car": "BMW",
-      "price": 35000,
-      "color": "black"
-    }, {
-      "car": "Porsche",
-      "price": 60000,
-      "color": "green"
-    }];
+    const {
+      type
+    } = ctx.params;
+    let customer_type = 1;
+    if (type === 'company') {
+      customer_type = 2;
+    }
+    const params = querystring.parse(ctx.querystring);
+    const list = await ctx.service.customer.getExportList(params, customer_type);
+    const fields = ['表一', '头儿', '测额'];
+
 
     let csv = json2csv(
-      myCars,
+      list || [],
       fields
     );
     const fileName = new Date().getTime() + '.csv';
     const filePath = path.resolve(this.app.config.static.dir, fileName);
-    fs.writeFileSync(filePath, csv);
+    var newCsv = iconv.encode(csv, 'GBK'); // 转编码
+    fs.writeFileSync(filePath, newCsv);
     //ctx.attachment 将 Content-Disposition 设置为 “附件” 以指示客户端提示下载
     this.ctx.attachment(fileName);
     this.ctx.set('Content-Type', 'application/octet-stream');

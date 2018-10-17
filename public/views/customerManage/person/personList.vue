@@ -2,7 +2,7 @@
   <div class="m-layout">
     <div class="operation">
       <el-button type="primary" icon="el-icon-plus" @click="handleCreate">添加人员</el-button>
-      <el-button type="primary" icon="el-icon-download"><a href="/api/person/ppp/download">导出Excel</a></el-button>
+      <el-button type="primary" icon="el-icon-download" @click="exportExcel">导出Excel</el-button>
     </div>
     <div class="query">
       <el-form :model="query" :inline="true" class="form-inline">
@@ -107,6 +107,7 @@
 </template>
 <script>
 import { parseTime } from '@/utils/index';
+import querystring from "querystring";
 export default {
   computed: {
     personList: {
@@ -187,6 +188,14 @@ export default {
     listLoadCb(data) {
       this.responseQuery.totalCount = data.query.totalCount;
       this.responseQuery.totalPageCount = data.query.totalPageCount
+    },
+    exportExcel() {
+      let downloadUrl = '/api/person/res/download';
+      let a = document.createElement('a');
+      let params = Object.assign({}, this.query, { pageSize: 100000 })
+      const str = querystring.stringify(params);
+      a.href = downloadUrl + '?' + str;
+      a.click();
     }
   },
   beforeRouteEnter(to, from, next) {
