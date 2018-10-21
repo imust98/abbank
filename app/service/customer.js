@@ -148,7 +148,7 @@ class CustomerService extends BaseService {
       from customer_base cb`;
     }
     if (params.statisticsType) {
-      if (params.statisticsType === 1) {
+      if (params.statisticsType === 'credit') {
         sql += ` inner join ${table} cp on cb.id = cp.customer_id`;
         sql += ` inner join customer_credit cc on cb.id = cc.customer_id`;
       } else {

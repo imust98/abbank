@@ -7,7 +7,7 @@
     <div class="query">
       <el-form :model="query" :inline="true" class="form-inline">
         <el-form-item label="人员分类">
-          <el-select v-model="query.card_type" clearable placeholder="请选择">
+          <el-select v-model="query.card_type" placeholder="请选择">
           <el-option
             v-for="item in cardType"
             :key="item.value"
