@@ -74,12 +74,11 @@ class CustomerService extends BaseService {
         });
         delete data.name;
         await conn.update(
-          table,
-          Object.assign({
-              id
-            },
-            data
-          )
+          table, data, {
+            where: {
+              customer_id: id
+            }
+          }
         );
       } else if (formType === 'credit') {
         const item = await conn.get('customer_credit', {
