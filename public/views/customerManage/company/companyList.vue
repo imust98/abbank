@@ -162,7 +162,7 @@ export default {
       this.responseQuery.totalPageCount = data.query.totalPageCount
     },
     exportExcel() {
-      let downloadUrl = '/api/person/res/download';
+      let downloadUrl = '/api/company/res/download';
       let a = document.createElement('a');
       let params = Object.assign({}, this.query, { pageSize: 100000 })
       const str = querystring.stringify(params);

@@ -103,16 +103,42 @@ class CustomerController extends BaseController {
       type
     } = ctx.params;
     let customer_type = 1;
+    let fileMap = {
+      name:'姓名',
+      birthday:'出生年月',
+      sex:'性别',
+      card_id:'身份证号',
+      phone:'电话',
+      hk_address:'户口所在地',
+      home_address:'家庭住址',
+      unit_address:'工作单位'
+    }
     if (type === 'company') {
       customer_type = 2;
+       fileMap = {
+        company_number:'企业编号',
+        name:'企业名称',
+        license_number:'营业执照编号',
+        register_money:'注册资金'
+      }
     }
     const params = querystring.parse(ctx.querystring);
-    const list = await ctx.service.customer.getExportList(params, customer_type);
-    const fields = ['表一', '头儿', '测额'];
-
-
+    let list = await ctx.service.customer.getExportList(params, customer_type);
+    const fields = ['id', 'name'];
+    
+    const _list = []
+    list = (list || []).forEach(item => {
+      let obj = {};
+      const arr = Object.keys(item);
+      arr.forEach(key => {
+        if(fileMap[key]){
+          obj[fileMap[key]] = item[key];
+        }
+      });
+      _list.push(obj);
+    })
     let csv = json2csv(
-      list || [],
+      _list || [],
       fields
     );
     const fileName = new Date().getTime() + '.csv';
