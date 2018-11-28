@@ -119,7 +119,7 @@
           </div>
         </el-form>
       </el-collapse-item>
-      <el-collapse-item title="贷款信息" name="3">
+      <!-- <el-collapse-item title="贷款信息" name="3">
         <el-form :model="ruleForm3" :inline="true" :rules="rules" ref="ruleForm3" label-width="120px" class="demo-ruleForm">
           <el-form-item label="贷款金额" prop="loans_count">
             <el-input v-model="ruleForm3.loans_count"></el-input>
@@ -190,7 +190,7 @@
             </el-form-item>
           </div>
         </el-form>
-      </el-collapse-item>
+      </el-collapse-item> -->
     </el-collapse>
   </div>
 </template>
@@ -229,27 +229,27 @@ export default {
         destroy_time: '',
         destroy_reason: ''
       },
-      ruleForm3: {
-        loans_count: '',
-        loans_deadline: '',
-        loans_rate: '',
-        lending_date: '',
-        loans_balance: '',
-        loans_subject: '',
-        repayment_method: '',
-        loans_bondsman_ids: '',
-        primary_person: '',
-        minor_person: '',
-        loans_use: '',
-        loans_kind: '',
-        loans_type: '',
-        bondsman_method: '',
-        loans_status: '',
-        industry_classify: '',
-        business_classify: '',
-        interest_income: '',
-        overdue_loans: ''
-      },
+      // ruleForm3: {
+      //   loans_count: '',
+      //   loans_deadline: '',
+      //   loans_rate: '',
+      //   lending_date: '',
+      //   loans_balance: '',
+      //   loans_subject: '',
+      //   repayment_method: '',
+      //   loans_bondsman_ids: '',
+      //   primary_person: '',
+      //   minor_person: '',
+      //   loans_use: '',
+      //   loans_kind: '',
+      //   loans_type: '',
+      //   bondsman_method: '',
+      //   loans_status: '',
+      //   industry_classify: '',
+      //   business_classify: '',
+      //   interest_income: '',
+      //   overdue_loans: ''
+      // },
       rules: {
         name: [
           { required: true, message: '请输入姓名', trigger: 'blur' },
@@ -311,7 +311,7 @@ export default {
       }).then(data => {
         vm.ruleForm1 = mergeValue(vm.ruleForm1, data);
         vm.ruleForm2 = mergeValue(vm.ruleForm2, data);
-        vm.ruleForm3 = mergeValue(vm.ruleForm3, data);
+        // vm.ruleForm3 = mergeValue(vm.ruleForm3, data);
       });
     });
   }

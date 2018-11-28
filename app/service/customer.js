@@ -50,9 +50,9 @@ class CustomerService extends BaseService {
       await conn.delete('customer_credit', {
         customer_id: id
       });
-      await conn.delete('customer_loans', {
-        customer_id: id
-      });
+      // await conn.delete('customer_loans', {
+      //   customer_id: id
+      // });
     }, this.ctx);
 
     return {
@@ -99,23 +99,23 @@ class CustomerService extends BaseService {
           );
         }
       } else {
-        const item = await conn.get('customer_loans', {
-          customer_id: id
-        });
-        if (item) {
-          await conn.update('customer_loans', data, {
-            where: {
-              customer_id: id
-            }
-          });
-        } else {
-          await conn.insert(
-            'customer_loans',
-            Object.assign(data, {
-              customer_id: id
-            })
-          );
-        }
+        // const item = await conn.get('customer_loans', {
+        //   customer_id: id
+        // });
+        // if (item) {
+        //   await conn.update('customer_loans', data, {
+        //     where: {
+        //       customer_id: id
+        //     }
+        //   });
+        // } else {
+        //   await conn.insert(
+        //     'customer_loans',
+        //     Object.assign(data, {
+        //       customer_id: id
+        //     })
+        //   );
+        // }
       }
     }, this.ctx);
     return result;
@@ -151,13 +151,13 @@ class CustomerService extends BaseService {
         sql += ` inner join ${table} cp on cb.id = cp.customer_id`;
         sql += ` inner join customer_credit cc on cb.id = cc.customer_id`;
       } else {
-        sql += ` inner join ${table} cp on cb.id = cp.customer_id`;
-        sql += ` inner join customer_loans cl on cb.id = cl.customer_id`;
+        // sql += ` inner join ${table} cp on cb.id = cp.customer_id`;
+        // sql += ` inner join customer_loans cl on cb.id = cl.customer_id`;
       }
     } else {
       sql += ` left join ${table} cp on cb.id = cp.customer_id`;
       sql += ` left join customer_credit cc on cb.id = cc.customer_id`;
-      sql += ` left join customer_loans cl on cb.id = cl.customer_id`;
+      // sql += ` left join customer_loans cl on cb.id = cl.customer_id`;
     }
     sql += ` where 1 = 1`;
     if (params.name) {
@@ -192,12 +192,12 @@ class CustomerService extends BaseService {
     const credit = await this.app.mysql.get('customer_credit', {
       customer_id: id
     });
-    const loans = await this.app.mysql.get('customer_loans', {
-      customer_id: id
-    });
+    // const loans = await this.app.mysql.get('customer_loans', {
+    //   customer_id: id
+    // });
     Object.assign(customer, _.omit(extra, ['id']));
     Object.assign(customer, _.omit(credit, ['id']));
-    Object.assign(customer, _.omit(loans, ['id']));
+    // Object.assign(customer, _.omit(loans, ['id']));
     return customer;
   }
   async getExportList(params, customer_type) {
@@ -214,13 +214,13 @@ class CustomerService extends BaseService {
         sql += ` inner join ${table} cp on cb.id = cp.customer_id`;
         sql += ` inner join customer_credit cc on cb.id = cc.customer_id`;
       } else {
-        sql += ` inner join ${table} cp on cb.id = cp.customer_id`;
-        sql += ` inner join customer_loans cl on cb.id = cl.customer_id`;
+        // sql += ` inner join ${table} cp on cb.id = cp.customer_id`;
+        // sql += ` inner join customer_loans cl on cb.id = cl.customer_id`;
       }
     } else {
       sql += ` left join ${table} cp on cb.id = cp.customer_id`;
       sql += ` left join customer_credit cc on cb.id = cc.customer_id`;
-      sql += ` left join customer_loans cl on cb.id = cl.customer_id`;
+      // sql += ` left join customer_loans cl on cb.id = cl.customer_id`;
     }
     sql += ` where 1 = 1`;
     if (params.name) {

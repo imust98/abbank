@@ -143,10 +143,14 @@ export default {
       optionsType: [{
         value: 'credit',
         label: '信用'
-      }, {
-        value: 'loans',
-        label: '贷款'
       }]
+      // optionsType: [{
+      //   value: 'credit',
+      //   label: '信用'
+      // }, {
+      //   value: 'loans',
+      //   label: '贷款'
+      // }]
     }
   },
   methods: {
