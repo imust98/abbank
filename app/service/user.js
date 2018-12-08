@@ -9,5 +9,27 @@
      }
      return null;
    }
+   async create(data) {
+     const result = await this.app.mysql.insert('user_info', data);
+     return (result && {
+       id: result.insertId
+     }) || {};
+   }
+   async getList() {
+     const result = await this.app.mysql.select('user_info');
+     return (result || [])
+   }
+   async delete(id) {
+     const result = await this.app.mysql.delete('user_info', {
+       id: id,
+     });
+     // if (result && result.serverStatus === 2) {
+
+     // }
+     return (result && {
+       id: id
+     }) || {};
+   }
+
  }
  module.exports = UserService;

@@ -6,15 +6,13 @@ import PersonCreate from '@/views/customerManage/person/person.vue';
 import PersonModify from '@/views/customerManage/person/personModify.vue';
 import PersonCredit from '@/views/customerManage/credit.vue';
 
-// import PersonCreditView from '@/views/customerManage/person/personCreditList.vue';
-// import PersonLoanView from '@/views/customerManage/person/personLoanList.vue';
-// import PersonItView from '@/views/customerManage/person/personList.vue';
-// import PersonBlackView from '@/views/customerManage/person/personList.vue';
-
 import CompanyCredit from '@/views/customerManage/credit.vue';
 import CompanyView from '@/views/customerManage/company/companyList.vue';
 import CompanyCreate from '@/views/customerManage/company/company.vue';
 import CompanyModify from '@/views/customerManage/company/companyModify.vue';
+
+import UserView from '@/views/userManage/index.vue';
+
 Vue.use(Router);
 
 
@@ -108,42 +106,29 @@ export const constantRouterMap = [
           roles: ['admin'] // or you can only set roles in sub nav
         }
       }
-      // {
-      //   path: 'person/credit/list',
-      //   component: PersonCreditView,
-      //   name:"personCreditList",
-      //   meta: {
-      //     title: '信用信息',
-      //     roles: ['admin'] // or you can only set roles in sub nav
-      //   }
-      // },
-      // {
-      //   path: 'person/loan/list',
-      //   component: PersonLoanView,
-      //   name:"personLoanList",
-      //   meta: {
-      //     title: '贷款信息',
-      //     roles: ['admin'] // or you can only set roles in sub nav
-      //   }
-      // },
-      // {
-      //   path: 'person/it/list',
-      //   component: PersonItView,
-      //   name:"personItList",
-      //   meta: {
-      //     title: '信息员',
-      //     roles: ['admin'] // or you can only set roles in sub nav
-      //   }
-      // },
-      // {
-      //   path: 'person/black/list',
-      //   component: PersonBlackView,
-      //   name:"personBlackList",
-      //   meta: {
-      //     title: '黑名单',
-      //     roles: ['admin'] // or you can only set roles in sub nav
-      //   }
-      // }
+      
+    ]
+  },
+  {
+    path: '/user',
+    component: Layout,
+    alwaysShow: true,
+    redirect: '/list',
+    name: 'user',
+    meta: {
+      title: '用户管理',
+      icon: 'user'
+    },
+    children:[
+      {
+        path: 'list',
+        component: UserView,
+        name:"userList",
+        meta: {
+          title: '用户列表',
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
+      }
     ]
   }
 ];

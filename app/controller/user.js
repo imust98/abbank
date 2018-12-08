@@ -25,6 +25,37 @@ class LoginController extends BaseController {
       result: true
     });
   }
+  async create() {
+    const {
+      ctx
+    } = this;
+    const result = await ctx.service.user.create(ctx.request.body);
+    this.setModel({
+      result: result
+    });
+  }
+  async delete() {
+    const {
+      ctx
+    } = this;
+    const {
+      id
+    } = ctx.params;
+    const user = await ctx.service.user.delete(parseInt(id));
+
+    this.setModel({
+      result: user
+    });
+  }
+  async list() {
+    const {
+      ctx
+    } = this;
+    const list = await ctx.service.user.getList();
+    this.setModel({
+      result: list
+    });
+  }
 }
 
 module.exports = LoginController;
