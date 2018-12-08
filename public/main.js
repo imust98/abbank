@@ -36,3 +36,7 @@ new Vue({
   components: { App },
   template: '<App/>'
 });
+
+store.dispatch('GenerateRoutes', window.config.user.role).then(() => { // 根据roles权限生成可访问的路由表
+  router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
+})

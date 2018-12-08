@@ -37,6 +37,7 @@ const permission = {
   },
   mutations: {
     ADD_ROUTERS: (state, routers) => {
+      debugger
       state.addRouters = routers;
       state.routers = constantRouterMap.concat(routers);
     }

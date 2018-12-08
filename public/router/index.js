@@ -116,7 +116,6 @@ export default new Router({
   mode: 'history',
   routes: constantRouterMap
 });
-
 export const asyncRouterMap = [
   {
     path: '/user',

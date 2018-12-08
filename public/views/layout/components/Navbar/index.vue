@@ -105,7 +105,7 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch('GenerateRoutes',this.user.role);
+    // this.$store.dispatch('GenerateRoutes',this.user.role);
   }
 };
 </script>
