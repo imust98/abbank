@@ -18,7 +18,12 @@ class HomeController extends Controller {
       ctx
     } = this;
     ctx.body = await ctx.renderView('index.ejs',{
-      user:ctx.session.user
+      user:{
+        id:ctx.session.user.id,
+        username:ctx.session.username,
+        realname:ctx.session.realname,
+        role:ctx.session.role
+      }
     });
   }
   async nofound() {

@@ -15,17 +15,26 @@
        id: result.insertId
      }) || {};
    }
+   async update(id, data) {
+    const result = await this.app.mysql.update('user_info', data, {
+      where: {
+        id: id
+      }
+    });
+    return result || {
+      id
+    }
+  }
    async getList() {
-     const result = await this.app.mysql.select('user_info');
+     const result = await this.app.mysql.select('user_info',{
+      columns: ['id', 'username','realname','role']
+     });
      return (result || [])
    }
    async delete(id) {
      const result = await this.app.mysql.delete('user_info', {
        id: id,
      });
-     // if (result && result.serverStatus === 2) {
-
-     // }
      return (result && {
        id: id
      }) || {};

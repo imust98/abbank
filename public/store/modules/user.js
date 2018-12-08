@@ -2,7 +2,8 @@
    logout,
    getList,
    addUser,
-   deleteUser
+   deleteUser,
+   updateUser
  } from '@/api/user';
  const user = {
    state: {
@@ -19,6 +20,9 @@
     UserDelete: (state, user) => {
       const index = state.list.findIndex(item => item.id === user.id);
       state.list.splice(index, 1);
+    },
+    UserUpdate:() => {
+
     }
    },
    actions: {
@@ -56,6 +60,17 @@
         addUser(data).then(response => {
           const data = response.data;
           commit('UserAddLoad', data.result);
+          resolve(data.result);
+        });
+      });
+    },
+    ModifyUser({
+      commit
+    }, data) {
+      return new Promise((resolve, reject) => {
+        updateUser(data).then(response => {
+          const data = response.data;
+          // commit('UserUpdate', data.result);
           resolve(data.result);
         });
       });

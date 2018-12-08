@@ -1,12 +1,17 @@
 <template>
   <div>
     <el-menu class="navbar" mode="horizontal">
-      <hamburger class="hamburger-container" :toggleClick="toggleSideBar" :isActive="sidebar.opened"></hamburger>
+      <hamburger
+        class="hamburger-container"
+        :toggleClick="toggleSideBar"
+        :isActive="sidebar.opened"
+      ></hamburger>
       <breadcrumb class="breadcrumb-container"></breadcrumb>
       <div class="right-menu">
         <el-dropdown :hide-on-click="true" @command="handleCommand">
           <span class="el-dropdown-link">
-            你好，{{user.username}}<i class="el-icon-arrow-down el-icon--right"></i>
+            你好，{{user.username}}
+            <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item command="modifyPwd">修改密码</el-dropdown-item>
@@ -15,6 +20,25 @@
         </el-dropdown>
       </div>
     </el-menu>
+    <el-dialog title="修改密码" :visible.sync="dialogFormVisible" width="400px">
+      <el-form
+        :model="ruleForm"
+        :rules="rules"
+        ref="ruleForm"
+        label-width="70px"
+        class="user-ruleForm"
+      >
+        <el-form-item label="用户名" prop="username">
+          <el-input disabled v-model="user.username"></el-input>
+        </el-form-item>
+        <el-form-item label="新密码" prop="password">
+          <el-input type="password" v-model="ruleForm.password"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="submitForm('ruleForm')">立即修改</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 
@@ -38,6 +62,16 @@ export default {
   },
   data() {
     return {
+      ruleForm: {
+        password: ''
+      },
+      rules: {
+        password: [
+          { required: true, message: '请输入密码', trigger: 'change' },
+          { min: 6, message: '长度在不小于6个字符 ', trigger: 'blur' }
+        ]
+      },
+      dialogFormVisible: false
     };
   },
   methods: {
@@ -48,11 +82,25 @@ export default {
       this.$store.dispatch('toggleSideBar');
     },
     modifyPwd() {
-
+      this.dialogFormVisible = true;
     },
     logout() {
       this.$store.dispatch('LogOut').then(() => {
         location.href = '/login';
+      });
+    },
+    submitForm(formName) {
+      const data = this.ruleForm;
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.$store.dispatch('ModifyUser', { data, params: { id: this.user.id } }).then((result) => {
+            this.dialogFormVisible = false;
+          }).catch(function () {
+            return new Error('reject again in nested Promise');
+          })
+        } else {
+          return false;
+        }
       });
     }
   }

@@ -47,6 +47,20 @@ class LoginController extends BaseController {
       result: user
     });
   }
+  async update() {
+    const {
+      ctx
+    } = this;
+    const {
+      id
+    } = ctx.params;
+    const user = await ctx.service.user.update(parseInt(id),ctx.request.body);
+
+    this.setModel({
+      result: user
+    });
+  }
+  
   async list() {
     const {
       ctx

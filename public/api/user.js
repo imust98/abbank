@@ -23,6 +23,13 @@ export function addUser(data = {}) {
     data
   });
 }
+export function updateUser(data = {}) {
+  return request({
+    url: formatRestfulUrl('/api/user/:id', data.params),
+    method: 'put',
+    data:data.data
+  });
+}
 
 export function deleteUser(data = {}) {
   return request({

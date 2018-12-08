@@ -18,6 +18,7 @@ module.exports = app => {
   router.post('/api/user/logout', controller.user.logout); 
   router.post('/api/user/add', controller.user.create); 
   router.delete('/api/user/:id', controller.user.delete); 
+  router.put('/api/user/:id', controller.user.update); 
   router.get('/api/user/list', controller.user.list); 
   router.post('/api/:type/add', controller.customer.create); 
   router.get('/api/:type/list', controller.customer.list); 

@@ -6,6 +6,7 @@
     <div class="list">
       <el-table :data="userList" :border="true" style="width: 100%">
         <el-table-column prop="username" label="用户名" width="80"></el-table-column>
+        <el-table-column prop="realname" label="真实姓名" width="80"></el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
             <div>
@@ -15,16 +16,19 @@
         </el-table-column>
       </el-table>
     </div>
-    <el-dialog title="添加用户" :visible.sync="dialogFormVisible">
+    <el-dialog title="添加用户" :visible.sync="dialogFormVisible" width="400px">
       <el-form
         :model="ruleForm"
         :rules="rules"
         ref="ruleForm"
-        label-width="100px"
+        label-width="70px"
         class="user-ruleForm"
       >
         <el-form-item label="用户名" prop="username">
           <el-input v-model="ruleForm.username"></el-input>
+        </el-form-item>
+        <el-form-item label="真实姓名" prop="realname">
+          <el-input v-model="ruleForm.realname"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="password">
           <el-input v-model="ruleForm.password"></el-input>
@@ -43,7 +47,8 @@ export default {
     return {
       ruleForm: {
         username: '',
-        password: ''
+        password: '',
+        realname:''
       },
       rules: {
         username: [
@@ -78,7 +83,8 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.$store.dispatch('AddUser', data).then((result) => {
-            this.$router.push('/user/list');
+            this.dialogFormVisible = false;
+            this.$store.dispatch('GetUserList');
           }).catch(function () {
             return new Error('reject again in nested Promise');
           })
