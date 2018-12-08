@@ -70,13 +70,9 @@
         label="联系方式"
         width="120">
       </el-table-column>
-      <el-table-column label="操作">
+      <el-table-column label="操作" v-if="user.role === 1">
         <template slot-scope="scope">
           <div>
-            <!-- <el-button v-if="!scope.row.credit_id"
-            size="mini"
-            type="primary"
-            @click="handleAddCredit(scope.$index, scope.row)">添加信用信息</el-button> -->
             <el-button
             size="mini"
             type="primary"
@@ -110,6 +106,11 @@ import { parseTime } from '@/utils/index';
 import querystring from "querystring";
 export default {
   computed: {
+    user: {
+      get() {
+        return this.$store.state.user.info
+      }
+    },
     personList: {
       get() {
         return this.$store.state.person.list || [];

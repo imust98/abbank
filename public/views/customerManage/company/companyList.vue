@@ -57,7 +57,7 @@
         width="120px"
         label="注册资金">
       </el-table-column>
-      <el-table-column label="操作">
+      <el-table-column label="操作" v-if="user.role === 2">
         <template slot-scope="scope">
           <div>
             <!-- <el-button v-if="!scope.row.credit_id"
@@ -99,6 +99,11 @@ export default {
     companyList: {
       get() {
         return this.$store.state.company.list || [];
+      }
+    },
+    user: {
+      get() {
+        return this.$store.state.user.info
       }
     }
   },
