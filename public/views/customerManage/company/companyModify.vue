@@ -2,7 +2,7 @@
   <div class="m-form-modify">
     <el-collapse v-model="activeNames" @change="handleChange">
       <el-collapse-item title="基础信息" name="1">
-        <el-form :model="ruleForm1" :inline="true" :rules="rules" ref="ruleForm1" label-width="120px" class="demo-ruleForm">
+        <el-form :model="ruleForm1" :inline="true" :rules="rules" ref="ruleForm1" label-width="160px" class="demo-ruleForm">
           <el-form-item label="企业名称" prop="name">
             <el-input v-model="ruleForm1.name"></el-input>
           </el-form-item>
@@ -244,27 +244,6 @@ export default {
         destroy_time: '',
         destroy_reason: ''
       },
-      // ruleForm3: {
-      //   loans_count: '',
-      //   loans_deadline: '',
-      //   loans_rate: '',
-      //   lending_date: '',
-      //   loans_balance: '',
-      //   loans_subject: '',
-      //   repayment_method: '',
-      //   loans_bondsman_ids: '',
-      //   primary_person: '',
-      //   minor_person: '',
-      //   loans_use: '',
-      //   loans_kind: '',
-      //   loans_type: '',
-      //   bondsman_method: '',
-      //   loans_status: '',
-      //   industry_classify: '',
-      //   business_classify: '',
-      //   interest_income: '',
-      //   overdue_loans: ''
-      // },
       rules: {
         company_name: [
           { required: true, message: '请输入营业执照信息', trigger: 'blur' },

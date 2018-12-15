@@ -111,7 +111,18 @@ class CustomerController extends BaseController {
       phone:'电话',
       hk_address:'户口所在地',
       home_address:'家庭住址',
-      unit_address:'工作单位'
+      unit_address:'工作单位',
+        income: '收入情况',
+        spouse_id: '家庭成员编号',
+        card_type: '客户类型',
+        credit_id: '信用证编号',
+        credit_start_time: '信用证发放日',
+        credit_expire_time: '信用证到期日',
+        credit_adjuster: '信用证评定人',
+        credit_level: '信用证授信级别',
+        customer_manager: '客户经理',
+        destroy_time: '销户日期',
+        destroy_reason: '销户原因'
     }
     if (type === 'company') {
       customer_type = 2;
@@ -119,7 +130,27 @@ class CustomerController extends BaseController {
         company_number:'企业编号',
         name:'企业名称',
         license_number:'营业执照编号',
-        register_money:'注册资金'
+        register_money:'注册资金',
+        business_address: '经营地址',
+        business_scope: '经营范围',
+        stockholder: '股东',
+        license_expiry_time: '营业执照有效期',
+        credit_institution_number: '信用机构代码证编号',
+        credit_institution_expiry_time: '信用机构代码证有效期',
+        land_license_number: '土地使用证',
+        land_license_expiry_time: '土地使用证有效期',
+        special_industry_number: '特种行业许可证编号',
+        special_industry_expiry_time: '特种行业许可证有效期',
+        open_account_number: '开户许可证编码',
+        open_account_expiry_time: '开户许可证有效期',
+        credit_id: '信用证编号',
+        credit_start_time: '信用证发放日',
+        credit_expire_time: '信用证到期日',
+        credit_adjuster: '信用证评定人',
+        credit_level: '信用证授信级别',
+        customer_manager: '客户经理',
+        destroy_time: '销户日期',
+        destroy_reason: '销户原因'
       }
     }
     const params = querystring.parse(ctx.querystring);
