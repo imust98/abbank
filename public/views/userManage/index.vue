@@ -5,8 +5,9 @@
     </div>
     <div class="list">
       <el-table :data="userList" :border="true" style="width: 100%">
-        <el-table-column prop="username" label="用户名" width="80"></el-table-column>
-        <el-table-column prop="realname" label="真实姓名" width="80"></el-table-column>
+        <el-table-column type="index" width="50" label="序号"></el-table-column>
+        <el-table-column prop="username" label="用户名" width="150"></el-table-column>
+        <el-table-column prop="realname" label="真实姓名" width="150"></el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
             <div>

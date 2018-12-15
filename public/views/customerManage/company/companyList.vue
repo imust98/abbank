@@ -57,13 +57,13 @@
         width="120px"
         label="注册资金">
       </el-table-column>
-      <el-table-column label="操作" v-if="user.role === 2">
+      <el-table-column label="操作" >
         <template slot-scope="scope">
-          <div>
-            <!-- <el-button v-if="!scope.row.credit_id"
+          <div v-if="user.role === 1">
+            <el-button
             size="mini"
             type="primary"
-            @click="handleAddCredit(scope.$index, scope.row)">添加信用信息</el-button> -->
+            @click="handleDetail(scope.$index, scope.row)">查看</el-button>
             <el-button
             size="mini"
             type="primary"
@@ -72,6 +72,12 @@
             size="mini"
             type="danger"
             @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+          </div>
+          <div v-else>
+            <el-button
+            size="mini"
+            type="primary"
+            @click="handleDetail(scope.$index, scope.row)">查看</el-button>
           </div>
         </template>
       </el-table-column>
@@ -154,6 +160,9 @@ export default {
     },
     handleModify(index, row) {
       this.$router.push('/customer/company/modify/' + row.id);
+    },
+    handleDetail(index, row) {
+      this.$router.push('/customer/company/detail/' + row.id);
     },
     handleDelete(index, row) {
       this.$store.dispatch('DelCompany', {

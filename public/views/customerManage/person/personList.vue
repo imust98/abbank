@@ -44,6 +44,11 @@
       :border="true"
       style="width: 100%">
       <el-table-column
+        prop="id"
+        width="120px"
+        label="客户ID">
+      </el-table-column>
+      <el-table-column
         prop="name"
         label="姓名"
         width="80">
@@ -62,17 +67,21 @@
       </el-table-column>
       <el-table-column
         prop="card_id"
-        width="150"
+        width="200"
         label="身份证号">
       </el-table-column>
       <el-table-column
         prop="phone"
         label="联系方式"
-        width="120">
+        width="150">
       </el-table-column>
-      <el-table-column label="操作" v-if="user.role === 1">
+      <el-table-column label="操作" >
         <template slot-scope="scope">
-          <div>
+          <div v-if="user.role === 1">
+            <el-button
+            size="mini"
+            type="primary"
+            @click="handleDetail(scope.$index, scope.row)">查看</el-button>
             <el-button
             size="mini"
             type="primary"
@@ -81,6 +90,12 @@
             size="mini"
             type="danger"
             @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+          </div>
+          <div v-else>
+            <el-button
+            size="mini"
+            type="primary"
+            @click="handleDetail(scope.$index, scope.row)">查看</el-button>
           </div>
         </template>
       </el-table-column>
@@ -178,6 +193,9 @@ export default {
     },
     handleModify(index, row) {
       this.$router.push('/customer/person/modify/' + row.id);
+    },
+    handleDetail(index, row){
+      this.$router.push('/customer/person/detail/' + row.id);
     },
     handleDelete(index, row) {
       this.$store.dispatch('DelPerson', {

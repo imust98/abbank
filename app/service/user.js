@@ -5,7 +5,9 @@
        username: data.username
      });
      if (user && data.password === user.password) {
-       return data;
+       const obj =  Object.assign({},user);
+       delete obj.password;
+       return obj;
      }
      return null;
    }

@@ -10,7 +10,11 @@ class LoginController extends BaseController {
     const user = await ctx.service.user.login(ctx.request.body);
     if(user){
       ctx.session.user = user;
-      // ctx.cookies.set('BANK_SESS','')
+      ctx.cookies.set('ABBANK_SESS', JSON.stringify(user), {
+        maxAge: 24 * 3600 * 1000,
+        httpOnly: true, // by default it's true
+        encrypt: true, // 加密，并且可以设置为中文
+      })
     }
     this.setModel({
       result: user

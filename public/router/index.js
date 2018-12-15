@@ -4,12 +4,14 @@ import Layout from '../views/layout/index.vue';
 import PersonView from '@/views/customerManage/person/personList.vue';
 import PersonCreate from '@/views/customerManage/person/person.vue';
 import PersonModify from '@/views/customerManage/person/personModify.vue';
+import PersonDetail from '@/views/customerManage/person/personDetail.vue';
 import PersonCredit from '@/views/customerManage/credit.vue';
 
 import CompanyCredit from '@/views/customerManage/credit.vue';
 import CompanyView from '@/views/customerManage/company/companyList.vue';
 import CompanyCreate from '@/views/customerManage/company/company.vue';
 import CompanyModify from '@/views/customerManage/company/companyModify.vue';
+import CompanyDetail from '@/views/customerManage/company/companyDetail.vue';
 
 import UserView from '@/views/userManage/index.vue';
 
@@ -68,6 +70,16 @@ export const constantRouterMap = [
         }
       },
       {
+        path: 'person/detail/:id',
+        component: PersonDetail,
+        hidden: true,
+        name:"personDetail",
+        meta: {
+          title: '查看客户信息',
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+      {
         path: 'company/list',
         component: CompanyView,
         name:"companyList",
@@ -105,6 +117,16 @@ export const constantRouterMap = [
           title: '修改企业信息',
           roles: ['admin'] // or you can only set roles in sub nav
         }
+      },
+      {
+        path: 'company/detail/:id',
+        component: CompanyDetail,
+        hidden: true,
+        name:"CompanyDetail",
+        meta: {
+          title: '查看企业信息',
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
       }
       
     ]
@@ -125,7 +147,7 @@ export const asyncRouterMap = [
     name: 'user',
     meta: {
       title: '用户管理',
-      icon: 'user'
+      icon: 'card'
     },
     children:[
       {
